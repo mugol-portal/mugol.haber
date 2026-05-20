@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -242,16 +243,19 @@
         .header-main {
             max-width: 1200px; margin: 0 auto;
             padding: 10px 20px;
+            display: flex; flex-direction: column;
+            gap: 8px;
+        }
+        .header-top-row {
             display: flex; align-items: center; justify-content: space-between;
-            flex-wrap: wrap; /* Mobilde alt satıra geçmesi için */
-            gap: 15px;
+            width: 100%;
         }
 
         /* 1. LOGO */
         .brand {
             text-decoration: none; display: flex; align-items: center; gap: 10px;
-            flex-shrink: 0; /* Küçülmesin */
-            order: 1; /* Mobilde 1. sıra */
+            flex-shrink: 0; 
+            order: 1; 
         }
         .brand-icon {
             width: 52px; height: 52px;
@@ -314,10 +318,10 @@
             to { background-position: 200% center; }
         }
 
-        /* 2. BUTONLAR (Mobilde Logo Yanına) */
+        /* 2. BUTONLAR */
         .header-actions {
             display: flex; gap: 8px; 
-            order: 2; /* Mobilde 2. sıra */
+            order: 2; 
         }
         .action-btn {
             width: 46px; 
@@ -369,33 +373,9 @@
             transform: scale(1.1);
         }
 
-        /* Bildirim Rozeti */
-        .notification-badge {
-            position: absolute; top: -5px; right: -5px;
-            background: var(--accent); color: white;
-            font-size: 0.65rem; padding: 3px 6px;
-            border-radius: 10px; font-weight: 700;
-            display: none;
-        }
-        .notification-badge.show { display: block; }
-        .action-btn i { transition: transform 0.3s; }
-        
-        .notification-badge {
-            position: absolute; top: -5px; right: -5px;
-            background: var(--accent); color: white;
-            font-size: 0.65rem; padding: 3px 6px;
-            border-radius: 10px; font-weight: 700;
-            animation: bounce 0.5s;
-        }
-        @keyframes bounce {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        /* 3. ARAMA (Mobilde Alt Satır) */
+        /* 3. ARAMA */
         .search-box {
-            flex-grow: 1; max-width: 400px; position: relative;
-            order: 3; /* Mobilde 3. sıra */
+            width: 100%; position: relative;
         }
         .search-input {
             width: 100%; padding: 10px 15px 10px 40px;
@@ -490,27 +470,16 @@
         }
         
         @keyframes slideIn {
-            from { 
-                opacity: 0; 
-                transform: translateX(-50%) translateY(10px) scaleX(0);
-            }
-            to { 
-                opacity: 1; 
-                transform: translateX(-50%) translateY(0) scaleX(1);
-            }
+            from { opacity: 0; transform: translateX(-50%) translateY(10px) scaleX(0); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scaleX(1); }
         }
         
-        .nav-btn i {
-            transition: transform 0.3s;
-        }
-        
-        .nav-btn:hover i {
-            transform: scale(1.2) rotate(5deg);
-        }
+        .nav-btn i { transition: transform 0.3s; }
+        .nav-btn:hover i { transform: scale(1.2) rotate(5deg); }
         .nav-btn.fav-tab i { color: var(--accent); }
         .nav-btn.active.fav-tab { background: linear-gradient(135deg, #ef4444, #f97316); }
 
-        /* --- SON DAKİKA --- */
+        /* --- SON DAKİKA KAYAN YAZI --- */
         .ticker-wrap {
             background: linear-gradient(135deg, #1e293b, #334155);
             color: white;
@@ -539,7 +508,7 @@
         .ticker-item:hover { color: #fbbf24; transform: scale(1.05); }
         @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 
-        /* --- İÇERİK BAŞLIK ALANI (FIXED) --- */
+        /* --- İÇERİK BAŞLIK ALANI --- */
         .container {
             max-width: 1200px; margin: 30px auto; padding: 0 20px;
             min-height: 80vh;
@@ -635,14 +604,8 @@
         }
         
         @keyframes fadeInUp {
-            from { 
-                opacity: 0; 
-                transform: translateY(40px) scale(0.95);
-            }
-            to { 
-                opacity: 1; 
-                transform: translateY(0) scale(1);
-            }
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
         
         .card:hover { 
@@ -653,34 +616,66 @@
         }
         
         .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
             background: radial-gradient(circle at top right, rgba(30, 64, 175, 0.1), transparent 50%),
                         radial-gradient(circle at bottom left, rgba(59, 130, 246, 0.1), transparent 50%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
-            z-index: 1;
+            opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 1;
         }
         
-        .card:hover::before { 
-            opacity: 1; 
-        }
+        .card:hover::before { opacity: 1; }
         
         .card::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
+            content: ''; position: absolute; top: 0; left: -100%;
             width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.7s;
-            z-index: 2;
+            transition: left 0.7s; z-index: 2;
         }
         
-        .card:hover::after { 
-            left: 100%; 
+        .card:hover::after { left: 100%; }
+
+        /* ── SON DAKİKA ÖZEL KART TASARIMI ── */
+        .card.breaking-card {
+            border: 2px solid #ef4444;
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.25);
+            transform: translateY(-2px);
         }
+        .card.breaking-card:hover {
+            border-color: #dc2626;
+            box-shadow: 0 16px 40px rgba(239, 68, 68, 0.4);
+            transform: translateY(-12px) scale(1.02);
+        }
+        body.dark-mode .card.breaking-card {
+            border-color: rgba(239, 68, 68, 0.6);
+            background: rgba(50, 20, 20, 0.6);
+        }
+
+        .breaking-ribbon {
+            position: absolute;
+            top: 0; left: 0; width: 100%;
+            background: linear-gradient(90deg, #ef4444, #dc2626, #b91c1c, #ef4444);
+            background-size: 300% 100%;
+            color: white;
+            text-align: center;
+            font-weight: 900;
+            font-size: 0.8rem;
+            padding: 6px 0;
+            letter-spacing: 1.5px;
+            z-index: 10;
+            animation: moveGradient 3s linear infinite;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.5);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        @keyframes moveGradient {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        @keyframes flashAlert {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        .card.breaking-card .source-tag { top: 40px; }
+        .card.breaking-card .fav-btn { top: 38px; }
 
         .card-img-wrap {
             position: relative; width: 100%; height: 200px;
@@ -697,17 +692,12 @@
         .card-img-wrap::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 50%;
             background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);
-            opacity: 0;
-            transition: opacity 0.3s;
+            opacity: 0; transition: opacity 0.3s;
         }
-        .card:hover .card-img-wrap::after {
-            opacity: 1;
-        }
+        .card:hover .card-img-wrap::after { opacity: 1; }
 
         .source-tag {
             position: absolute; top: 14px; left: 14px;
@@ -747,76 +737,6 @@
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.7; transform: scale(0.95); }
-        }
-
-        /* YENİ HABER BADGE */
-        .new-badge {
-            position: absolute; top: 14px; right: 14px;
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
-            color: white;
-            padding: 6px 14px;
-            border-radius: 24px;
-            font-size: 0.7rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.3);
-            z-index: 3;
-            animation: newBadgePulse 2s ease-in-out infinite;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        @keyframes newBadgePulse {
-            0%, 100% { 
-                transform: scale(1); 
-                box-shadow: 0 4px 16px rgba(239, 68, 68, 0.5); 
-            }
-            50% { 
-                transform: scale(1.08); 
-                box-shadow: 0 6px 24px rgba(239, 68, 68, 0.7); 
-            }
-        }
-
-        /* SKELETON LOADING */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: loading 1.5s ease-in-out infinite;
-        }
-        @keyframes loading {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-        .dark-mode .skeleton {
-            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
-            background-size: 200% 100%;
-        }
-        .skeleton-card {
-            border-radius: var(--radius);
-            overflow: hidden;
-        }
-        .skeleton-img {
-            height: 200px;
-        }
-        .skeleton-text {
-            height: 16px;
-            margin: 10px 20px;
-            border-radius: 8px;
-        }
-        .skeleton-title {
-            height: 24px;
-            margin: 15px 20px 10px;
-            border-radius: 8px;
-            width: 80%;
-        }
-
-            color: var(--primary);
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
         }
 
         .fav-btn {
@@ -874,63 +794,35 @@
         .read-btn {
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
             background-size: 200% auto;
-            color: white;
-            border: none; 
-            width: 100%; 
-            padding: 16px; 
-            border-radius: 14px;
-            font-weight: 900; 
-            font-size: 1rem;
-            cursor: pointer; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: white; border: none; width: 100%; padding: 16px; 
+            border-radius: 14px; font-weight: 900; font-size: 1rem;
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 16px rgba(30, 64, 175, 0.3),
                         inset 0 1px 1px rgba(255, 255, 255, 0.3),
                         inset 0 -1px 1px rgba(0, 0, 0, 0.1);
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            position: relative; overflow: hidden;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
             letter-spacing: 0.3px;
         }
         
         .read-btn::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%; right: 0; bottom: 0;
+            content: ''; position: absolute; top: 0; left: -100%; right: 0; bottom: 0;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
             transition: left 0.6s;
         }
-        
-        .read-btn:hover::before {
-            left: 100%;
-        }
-        
+        .read-btn:hover::before { left: 100%; }
         .read-btn:hover {
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 28px rgba(30, 64, 175, 0.5),
                         inset 0 1px 1px rgba(255, 255, 255, 0.4);
             background-position: right center;
         }
+        .read-btn:active { transform: translateY(-1px) scale(0.98); }
+        .read-btn i { transition: transform 0.3s; }
+        .read-btn:hover i { transform: translateX(4px); }
         
-        .read-btn:active {
-            transform: translateY(-1px) scale(0.98);
-            box-shadow: 0 6px 16px rgba(30, 64, 175, 0.4);
-        }
-        
-        .read-btn i {
-            transition: transform 0.3s;
-        }
-        
-        .read-btn:hover i {
-            transform: translateX(4px);
-        }
-        
-        .share-btn {
-            transition: all 0.3s;
-        }
+        .share-btn { transition: all 0.3s; }
         .share-btn:hover {
             background: var(--primary) !important;
             color: white !important;
@@ -938,127 +830,74 @@
             transform: translateY(-2px);
         }
 
-        /* SKELETON */
-        .skeleton { 
-            background: var(--bg-card); 
-            border: 1px solid var(--border); 
-            border-radius: var(--radius); 
-            overflow: hidden; 
-            height: 420px;
-            animation: fadeIn 0.3s;
-        }
-        .sk-img { 
-            height: 200px; 
-            background: linear-gradient(90deg, var(--bg-body) 25%, var(--border) 50%, var(--bg-body) 75%);
+        /* SKELETON LOADING */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
             background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
+            animation: loading 1.5s ease-in-out infinite;
         }
-        .sk-line { 
-            height: 12px; 
-            margin: 15px 20px; 
-            border-radius: 6px; 
-            background: linear-gradient(90deg, var(--bg-body) 25%, var(--border) 50%, var(--bg-body) 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-        }
-        @keyframes shimmer {
+        @keyframes loading {
             0% { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+        .dark-mode .skeleton {
+            background: linear-gradient(90deg, #1e293b 25%, #334155 50%, #1e293b 75%);
+            background-size: 200% 100%;
+        }
+        .skeleton-card { border-radius: var(--radius); overflow: hidden; }
+        .skeleton-img { height: 200px; }
+        .skeleton-text { height: 16px; margin: 10px 20px; border-radius: 8px; }
+        .skeleton-title { height: 24px; margin: 15px 20px 10px; border-radius: 8px; width: 80%; }
 
         /* AYARLAR PANELİ */
         .settings-panel {
-            position: fixed; top: 70px; right: 20px;
-            background: var(--bg-card); border: 1px solid var(--border);
-            border-radius: 20px; padding: 0;
-            box-shadow: var(--shadow-lg);
-            display: none; z-index: 1500;
-            width: 340px; overflow: hidden;
+            position: fixed; top: 60px; right: 20px;
+            background: var(--bg-card); border: 2px solid var(--border);
+            border-radius: 18px; padding: 0; box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            display: none; z-index: 1500; width: 340px; overflow: hidden;
             animation: slideInRight 0.3s;
         }
-        @keyframes slideInRight {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        body.dark-mode .settings-panel {
+            background: #1e293b; border-color: #475569; box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
+        @keyframes slideInRight { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         .settings-panel.show { display: block; }
         
         .settings-header {
             background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white; padding: 20px;
-            display: flex; justify-content: space-between; align-items: center;
+            color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center;
         }
-        .settings-title {
-            font-size: 1.3rem; font-weight: 900;
-            display: flex; align-items: center; gap: 10px;
-        }
+        .settings-title { font-size: 1.3rem; font-weight: 900; display: flex; align-items: center; gap: 10px; }
         .settings-close {
-            background: rgba(255,255,255,0.2); border: none;
-            width: 36px; height: 36px; border-radius: 12px;
-            color: white; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.2); border: none; width: 34px; height: 34px; border-radius: 10px;
+            color: white; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center;
             font-size: 1.2rem;
         }
-        .settings-close:hover { 
-            background: rgba(255,255,255,0.3); 
-            transform: rotate(90deg);
-        }
-        
+        .settings-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
         .settings-body { padding: 25px; }
         .setting-group { margin-bottom: 25px; }
-        .setting-label {
-            font-size: 0.95rem; font-weight: 800; color: var(--text-main);
-            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
-        }
+        .setting-label { font-size: 0.9rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .setting-options { display: flex; flex-wrap: wrap; gap: 10px; }
+        
         .setting-btn {
-            flex: 1; min-width: 95px;
+            flex: 1; min-width: 90px;
             background: var(--bg-body); border: 2px solid var(--border);
-            padding: 14px; border-radius: 14px; cursor: pointer;
-            transition: all 0.3s; text-align: center;
-            display: flex; flex-direction: column; align-items: center; gap: 8px;
+            padding: 14px; border-radius: 12px; cursor: pointer; transition: all 0.3s;
+            text-align: center; display: flex; flex-direction: column; align-items: center; gap: 6px;
+            font-weight: 600; color: var(--text-main);
         }
-        .setting-btn:hover {
-            border-color: var(--primary); 
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-        }
-        .setting-btn.active {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            border-color: transparent;
-            color: white; 
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-        }
-        .setting-btn i { font-size: 1.3rem; }
-        .setting-btn span { font-size: 0.85rem; font-weight: 700; }
+        body.dark-mode .setting-btn { background: #0f172a; border-color: #475569; color: #f8fafc; }
+        .setting-btn:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2); }
+        .setting-btn.active { background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-color: transparent; color: white !important; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3); }
         
-        .setting-divider {
-            height: 2px; 
-            background: linear-gradient(90deg, transparent, var(--border), transparent);
-            margin: 20px 0;
+        .quick-actions { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .quick-btn {
+            background: var(--bg-body); border: 2px solid var(--border); padding: 14px;
+            border-radius: 12px; cursor: pointer; transition: all 0.3s;
+            display: flex; align-items: center; gap: 12px; font-weight: 600; color: var(--text-main);
         }
-        
-        .action-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .action-btn-large {
-            background: var(--bg-body); border: 2px solid var(--border);
-            padding: 16px; border-radius: 14px; cursor: pointer;
-            transition: all 0.3s; text-align: center; font-weight: 800; 
-            display: flex; align-items: center;
-            justify-content: center; gap: 8px; color: var(--text-main);
-        }
-        .action-btn-large:hover {
-            border-color: var(--primary); color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-        }
-        .action-btn-large.primary {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white; border-color: transparent;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        .action-btn-large.primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
-        }
+        .quick-btn i { font-size: 1.2rem; color: var(--primary); }
+        .quick-btn:hover { border-color: var(--primary); transform: translateX(5px); background: var(--bg-hover); }
 
         /* MODAL */
         .modal-wrap {
@@ -1079,542 +918,122 @@
         }
         iframe { width: 100%; flex-grow: 1; border: none; background: #fff; }
 
-        iframe { width: 100%; flex-grow: 1; border: none; background: #fff; }
-
-        /* AYARLAR PANELİ */
-        .settings-panel {
-            position: fixed; top: 60px; right: 20px;
-            background: var(--bg-card); 
-            border: 2px solid var(--border);
-            border-radius: 18px; padding: 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-            display: none; z-index: 1500;
-            width: 340px; overflow: hidden;
-            animation: slideInRight 0.3s;
-        }
-        body.dark-mode .settings-panel {
-            background: #1e293b;
-            border-color: #475569;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-        }
-        @keyframes slideInRight {
-            from { transform: translateX(400px); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        .settings-panel.show { display: block; }
-        
-        .settings-header {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: white; padding: 20px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .settings-title {
-            font-size: 1.3rem; font-weight: 900;
-            display: flex; align-items: center; gap: 10px;
-        }
-        .settings-close {
-            background: rgba(255,255,255,0.2); border: none;
-            width: 34px; height: 34px; border-radius: 10px;
-            color: white; cursor: pointer; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem;
-        }
-        .settings-close:hover { background: rgba(255,255,255,0.3); transform: rotate(90deg); }
-        
-        .settings-body { padding: 25px; }
-        
-        .setting-group { margin-bottom: 25px; }
-        
-        .setting-label {
-            font-size: 0.9rem; font-weight: 700; color: var(--text-main);
-            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
-        }
-        
-        .setting-options {
-            display: flex; flex-wrap: wrap; gap: 10px;
-        }
-        
-        .setting-btn {
-            flex: 1; min-width: 90px;
-            background: var(--bg-body); border: 2px solid var(--border);
-            padding: 14px; border-radius: 12px; cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            display: flex; flex-direction: column; align-items: center; gap: 6px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-        body.dark-mode .setting-btn {
-            background: #0f172a;
-            border-color: #475569;
-            color: #f8fafc;
-        }
-        .setting-btn:hover {
-            border-color: var(--primary); 
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
-        }
-        .setting-btn.active {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            border-color: transparent;
-            color: white !important;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        .setting-btn i { font-size: 1.2rem; }
-        .setting-btn span { font-size: 0.8rem; font-weight: 600; }
-
-        /* HIZLI İŞLEMLER */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
-        .quick-btn {
-            background: var(--bg-body);
-            border: 2px solid var(--border);
-            padding: 14px;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-        .quick-btn i {
-            font-size: 1.2rem;
-            color: var(--primary);
-        }
-        .quick-btn:hover {
-            border-color: var(--primary);
-            transform: translateX(5px);
-            background: var(--bg-hover);
-        }
-        .quick-btn:active {
-            transform: scale(0.98);
-        }
-
         /* YUKARI ÇIK BUTONU */
         .scroll-top {
-            position: fixed; 
-            bottom: 30px; 
-            right: 30px;
-            width: 56px; 
-            height: 56px; 
-            border-radius: 50%;
+            position: fixed; bottom: 30px; right: 30px;
+            width: 56px; height: 56px; border-radius: 50%;
             background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
-            background-size: 200% auto;
-            color: white; 
-            border: 3px solid rgba(255, 255, 255, 0.3); 
-            cursor: pointer;
-            display: none; 
-            align-items: center; 
-            justify-content: center;
-            font-size: 1.3rem;
-            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.5),
-                        inset 0 2px 2px rgba(255, 255, 255, 0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            z-index: 1000;
+            color: white; border: 3px solid rgba(255, 255, 255, 0.3); cursor: pointer;
+            display: none; align-items: center; justify-content: center; font-size: 1.3rem;
+            box-shadow: 0 8px 24px rgba(30, 64, 175, 0.5); transition: all 0.4s; z-index: 1000;
             animation: float 3s ease-in-out infinite;
         }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .scroll-top:hover {
-            transform: translateY(-8px) scale(1.15) rotate(10deg);
-            box-shadow: 0 12px 32px rgba(30, 64, 175, 0.7);
-            background-position: right center;
-            border-color: rgba(255, 255, 255, 0.5);
-            animation: none;
-        }
-        
-        .scroll-top:active {
-            transform: translateY(-4px) scale(1.05);
-        }
-        
-        .scroll-top i {
-            transition: transform 0.3s;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-        }
-        
-        .scroll-top:hover i {
-            transform: translateY(-3px);
-        }
+        .scroll-top.show { display: flex; animation: bounceIn 0.5s; }
+        @keyframes bounceIn { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .scroll-top:hover { transform: translateY(-8px) scale(1.15) rotate(10deg); box-shadow: 0 12px 32px rgba(30, 64, 175, 0.7); animation: none; }
         
         /* PWA INSTALL BANNER */
         .install-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-            color: white;
-            padding: 20px;
-            transform: translateY(100%);
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 9999;
-            box-shadow: 0 -8px 32px rgba(30, 64, 175, 0.5);
-            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color: white;
+            padding: 20px; transform: translateY(100%); transition: transform 0.5s; z-index: 9999;
         }
-        
-        .install-banner.show {
-            transform: translateY(0);
-            animation: slideUpBounce 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        @keyframes slideUpBounce {
-            0% { transform: translateY(100%); }
-            60% { transform: translateY(-10px); }
-            80% { transform: translateY(5px); }
-            100% { transform: translateY(0); }
-        }
-        
-        .install-banner-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        
-        .install-banner-icon {
-            width: 56px;
-            height: 56px;
-            background: white;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            color: var(--primary);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
-            animation: bounce 2s ease-in-out infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-        
-        .install-banner-text {
-            flex: 1;
-            min-width: 200px;
-        }
-        
-        .install-banner-title {
-            font-size: 1.1rem;
-            font-weight: 900;
-            margin: 0 0 4px 0;
-            font-family: 'Nunito', sans-serif;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .install-banner-desc {
-            font-size: 0.9rem;
-            opacity: 0.95;
-            margin: 0;
-        }
-        
-        .install-banner-actions {
-            display: flex;
-            gap: 12px;
-        }
-        
-        .install-btn {
-            padding: 12px 24px;
-            border-radius: 12px;
-            border: none;
-            font-weight: 800;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: 'Nunito', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .install-btn-primary {
-            background: white;
-            color: var(--primary);
-            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.3);
-        }
-        
-        .install-btn-primary:hover {
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.4);
-        }
-        
-        .install-btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .install-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-        
-        @media (max-width: 640px) {
-            .install-banner {
-                padding: 16px;
-            }
-            
-            .install-banner-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .install-banner-icon {
-                width: 48px;
-                height: 48px;
-                font-size: 1.5rem;
-            }
-            
-            .install-banner-actions {
-                width: 100%;
-                flex-direction: column;
-            }
-            
-            .install-btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-
-        /* TOAST BİLDİRİMLER */
-        .toast {
-            position: fixed;
-            bottom: 100px;
-            right: 30px;
-            background: white;
-            padding: 16px 20px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            z-index: 9999;
-            animation: slideIn 0.3s ease-out;
-            min-width: 280px;
-            border-left: 4px solid var(--primary);
-        }
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        .toast.success { border-left-color: var(--success); }
-        .toast.error { border-left-color: var(--accent); }
-        .toast.info { border-left-color: var(--info); }
-        .toast i {
-            font-size: 1.5rem;
-        }
-        .toast.success i { color: var(--success); }
-        .toast.error i { color: var(--accent); }
-        .toast.info i { color: var(--info); }
-        .toast-message {
-            flex: 1;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-        .dark-mode .toast {
-            background: #1e293b;
-            color: #f8fafc;
-        }
-            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.5);
-        }
-        .scroll-top.show { display: flex; animation: bounceIn 0.5s; }
-        @keyframes bounceIn {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .install-banner.show { transform: translateY(0); }
+        .install-banner-content { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+        .install-banner-icon { width: 56px; height: 56px; background: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--primary); animation: bounce 2s infinite; }
+        .install-banner-text { flex: 1; min-width: 200px; }
+        .install-banner-title { font-size: 1.1rem; font-weight: 900; margin: 0 0 4px 0; }
+        .install-banner-desc { font-size: 0.9rem; opacity: 0.95; margin: 0; }
+        .install-banner-actions { display: flex; gap: 12px; }
+        .install-btn { padding: 12px 24px; border-radius: 12px; border: none; font-weight: 800; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+        .install-btn-primary { background: white; color: var(--primary); }
+        .install-btn-secondary { background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3); }
 
         /* TOAST BİLDİRİMLERİ */
         .toast {
-            position: fixed; bottom: 30px; left: 50%;
-            transform: translateX(-50%);
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             background: var(--bg-card); border: 2px solid var(--border);
-            border-radius: 12px; padding: 15px 25px;
-            box-shadow: var(--shadow-hover);
-            display: none; align-items: center; gap: 10px;
-            z-index: 2000; min-width: 300px;
+            border-radius: 12px; padding: 15px 25px; box-shadow: var(--shadow-hover);
+            display: none; align-items: center; gap: 10px; z-index: 2000; min-width: 300px;
             animation: slideUpToast 0.3s;
         }
-        @keyframes slideUpToast {
-            from { transform: translate(-50%, 100px); opacity: 0; }
-            to { transform: translate(-50%, 0); opacity: 1; }
-        }
+        @keyframes slideUpToast { from { transform: translate(-50%, 100px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
         .toast.show { display: flex; }
-        .toast i { font-size: 1.3rem; }
         .toast.success { border-left: 4px solid var(--success); }
         .toast.success i { color: var(--success); }
-        .toast.info { border-left: 4px solid var(--info); }
-        .toast.info i { color: var(--info); }
-        .toast-message { font-weight: 600; color: var(--text-main); }
-
-        /* SCROLL PROGRESS BAR */
-        .scroll-progress {
-            position: fixed; top: 0; left: 0;
-            width: 0%; height: 3px;
-            background: var(--gradient-primary);
-            z-index: 9999; transition: width 0.1s;
-        }
 
         /* HIZLI ERİŞİM MENÜSÜ */
-        .quick-menu {
-            position: fixed;
-            right: 30px;
-            bottom: 100px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 999;
-        }
-        .quick-menu-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            opacity: 0;
-            transform: scale(0);
-        }
-        .quick-menu-btn.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-        .quick-menu-btn:hover {
-            transform: scale(1.1);
-        }
-        .quick-menu-btn.theme-btn {
-            background: linear-gradient(135deg, #f59e0b, #f97316);
-            color: white;
-        }
-        .quick-menu-btn.search-btn {
-            background: linear-gradient(135deg, #06b6d4, #0ea5e9);
-            color: white;
-        }
-        .quick-menu-btn.refresh-btn {
-            background: linear-gradient(135deg, #10b981, #34d399);
-            color: white;
-        }
-
+        .quick-menu { position: fixed; right: 30px; bottom: 100px; display: flex; flex-direction: column; gap: 10px; z-index: 999; }
+        .quick-menu-btn { width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.2); opacity: 0; transform: scale(0); }
+        .quick-menu-btn.show { opacity: 1; transform: scale(1); }
+        .quick-menu-btn.theme-btn { background: linear-gradient(135deg, #f59e0b, #f97316); color: white; }
+        .quick-menu-btn.search-btn { background: linear-gradient(135deg, #06b6d4, #0ea5e9); color: white; }
+        .quick-menu-btn.refresh-btn { background: linear-gradient(135deg, #10b981, #34d399); color: white; }
 
         /* ── Portal Geri Butonu ── */
         .portal-back-btn {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 8px 14px;
-            border-radius: 12px;
-            background: var(--glass-bg);
-            border: 1.5px solid var(--border);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transition: all 0.25s;
-            white-space: nowrap;
-            flex-shrink: 0;
+            text-decoration: none; color: var(--text-muted); font-size: 0.8rem; font-weight: 700;
+            display: inline-flex; align-items: center; gap: 5px; padding: 8px 14px;
+            border-radius: 12px; background: var(--glass-bg); border: 1.5px solid var(--border);
+            backdrop-filter: blur(10px); transition: all 0.25s; white-space: nowrap; flex-shrink: 0;
         }
         .portal-back-btn:hover { color: var(--primary); border-color: var(--primary); transform: translateX(-2px); }
-        .portal-back-btn svg { width: 13px; height: 13px; }
 
         @media (max-width: 768px) {
-            /* MOBİL HEADER DÜZENİ */
-            .scroll-top {
-                width: 45px; height: 45px;
-                bottom: 20px; right: 20px;
-            }
-            
-            .quick-menu {
-                right: 20px;
-                bottom: 80px;
-            }
-            .quick-menu-btn {
-                width: 45px;
-                height: 45px;
-            }
-            
-            .settings-panel {
-                top: 0; left: 0; right: 0; bottom: 0;
-                width: 100%; border-radius: 0;
-            }
-            
-            .header-main { 
-                padding: 10px 15px; 
-            }
-            .brand { order: 1; flex-grow: 1; } /* Logo Solda */
-            .header-actions { order: 2; }      /* Butonlar Sağda */
-            
-            /* Arama Kutusu Alt Satırda */
-            .search-box { 
-                order: 3; width: 100%; max-width: 100%; margin-top: 5px; 
-            }
-            
+            .scroll-top { width: 45px; height: 45px; bottom: 20px; right: 20px; }
+            .quick-menu { right: 20px; bottom: 80px; }
+            .quick-menu-btn { width: 45px; height: 45px; }
+            .settings-panel { top: 0; left: 0; right: 0; bottom: 0; width: 100%; border-radius: 0; }
+            .header-main { padding: 8px 12px; }
+            .search-box { width: 100%; max-width: 100%; }
             .grid { grid-template-columns: 1fr; }
             .grid.list-view .card { height: 130px; }
-            
-            /* Başlık ve Buton Yan Yana */
-            .section-header {
-                display: flex; justify-content: space-between; align-items: center;
-            }
-            .controls { gap: 5px; }
+            .section-header { display: flex; justify-content: space-between; align-items: center; }
+            .install-banner-content { flex-direction: column; text-align: center; }
+            .install-banner-actions { width: 100%; flex-direction: column; }
+            .install-btn { width: 100%; justify-content: center; }
+            /* Taşma önleme */
+            .header-actions { gap: 5px; flex-shrink: 0; }
+            .action-btn { width: 38px; height: 38px; font-size: 0.95rem; border-radius: 11px; }
+            .portal-back-btn { padding: 6px 10px; font-size: 0.75rem; border-radius: 10px; }
+            .brand-text { font-size: 1.3rem; }
+            .brand-icon { width: 42px; height: 42px; }
         }
     </style>
 </head>
 <body>
-    <!-- SCROLL PROGRESS BAR -->
     <amp-auto-ads type="adsense" data-ad-client="ca-pub-1880946354382681"></amp-auto-ads>
     <div class="scroll-progress" id="scrollProgress"></div>
 
     <header>
         <div class="header-main">
-            <!-- 1. LOGO -->
-            <a href="#" class="brand" onclick="location.reload()">
-                <div class="brand-icon">
-    <img src="./icon-192.png" alt="MuGöl Haber Logo" style="width: 100%; height: 100%; object-fit: contain;">
-                </div> 
-                <div class="brand-text">MuGöl <span>Haber</span></div>
-            </a>
-            
-            <!-- 2. ARAMA -->
+            <!-- ÜST SATIR: Logo + Butonlar -->
+            <div class="header-top-row">
+                <!-- 1. LOGO -->
+                <a href="#" class="brand" onclick="location.reload()">
+                    <div class="brand-icon">
+                        <img src="./icon-192.png" alt="MuGöl Haber Logo" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div> 
+                    <div class="brand-text">MuGöl <span>Haber</span></div>
+                </a>
+
+                <!-- 3. BUTONLAR -->
+                <div class="header-actions">
+                    <a href="https://mugol-portal.github.io" class="portal-back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Portal</a>
+                    <button class="action-btn" onclick="toggleSettings()" id="settings-btn" title="Ayarlar">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="action-btn" onclick="refreshNews()" title="Yenile">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. ARAMA - Alt satır -->
             <div class="search-box">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" class="search-input" id="search-input" placeholder="Haberlerde ara...">
-            </div>
-
-            <!-- 3. BUTONLAR -->
-            <div class="header-actions">
-                <a href="https://mugol-portal.github.io" class="portal-back-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>Portal</a>
-                <button class="action-btn" onclick="toggleSettings()" id="settings-btn" title="Ayarlar">
-                    <i class="fas fa-cog"></i>
-                </button>
-                <button class="action-btn" onclick="refreshNews()" title="Yenile">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
             </div>
         </div>
 
@@ -1625,7 +1044,7 @@
         </div>
     </header>
 
-    <!-- SON DAKİKA -->
+    <!-- SON DAKİKA KAYAN YAZI -->
     <div class="ticker-wrap">
         <div class="ticker-label">SON DAKİKA</div>
         <div class="ticker-content" id="ticker-feed">
@@ -1634,7 +1053,7 @@
     </div>
 
     <div class="container">
-        <!-- BAŞLIK VE YENİLEME BUTONU AYNI HİZADA -->
+        <!-- BAŞLIK VE YENİLEME BUTONU -->
         <div class="section-header">
             <h1 class="page-title" id="page-title">Gündem</h1>
             <div class="controls">
@@ -1643,11 +1062,10 @@
             </div>
         </div>
 
-        <!-- İSTATİSTİK KARTLARI -->
         <!-- FİLTRELER ALTTA -->
         <div class="filter-container" id="filter-container"></div>
 
-        <!-- ── ADSENSE REKLAM KUTUSU 1 — Resimli ── -->
+        <!-- ── ADSENSE REKLAM KUTUSU 1 ── -->
         <div class="mg-ad-box" aria-label="Reklam" role="complementary">
             <span class="mg-ad-label">Reklam</span>
             <ins class="adsbygoogle"
@@ -1664,7 +1082,7 @@
             <div class="skeleton"><div class="sk-img"></div><div class="sk-line"></div><div class="sk-line" style="width:60%"></div></div>
         </div>
 
-        <!-- ── ADSENSE REKLAM KUTUSU 2 — Resimli (Alt) ── -->
+        <!-- ── ADSENSE REKLAM KUTUSU 2 ── -->
         <div class="mg-ad-box mg-ad-box--bottom" aria-label="Reklam" role="complementary">
             <span class="mg-ad-label">Reklam</span>
             <ins class="adsbygoogle"
@@ -1674,98 +1092,6 @@
                  data-ad-format="rectangle"></ins>
         </div>
 
-    </div>
-
-    <!-- AYARLAR PANELİ -->
-    <div class="settings-panel" id="settingsPanel">
-        <div class="settings-header">
-            <div class="settings-title">
-                <i class="fas fa-cog"></i>
-                Ayarlar
-            </div>
-            <button class="settings-close" onclick="toggleSettings()">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="settings-body">
-            <!-- TEMA -->
-            <div class="setting-group">
-                <div class="setting-label">
-                    <i class="fas fa-palette"></i> Tema
-                </div>
-                <div class="setting-options">
-                    <button class="setting-btn active" id="theme-light" onclick="setTheme('light')">
-                        <i class="fas fa-sun"></i>
-                        <span>Aydınlık</span>
-                    </button>
-                    <button class="setting-btn" id="theme-dark" onclick="setTheme('dark')">
-                        <i class="fas fa-moon"></i>
-                        <span>Karanlık</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="setting-divider"></div>
-
-            <!-- GÖRÜNÜM -->
-            <div class="setting-group">
-                <div class="setting-label">
-                    <i class="fas fa-th-large"></i> Görünüm
-                </div>
-                <div class="setting-options">
-                    <button class="setting-btn active" id="view-grid" onclick="setView('grid')">
-                        <i class="fas fa-th-large"></i>
-                        <span>Kart</span>
-                    </button>
-                    <button class="setting-btn" id="view-list" onclick="setView('list')">
-                        <i class="fas fa-list"></i>
-                        <span>Liste</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="setting-divider"></div>
-
-            <!-- YAZI BOYUTU -->
-            <div class="setting-group">
-                <div class="setting-label">
-                    <i class="fas fa-text-height"></i> Yazı Boyutu
-                </div>
-                <div class="setting-options">
-                    <button class="setting-btn" id="font-small" onclick="setFontSize(14)">
-                        <i class="fas fa-font" style="font-size:0.9rem"></i>
-                        <span>Küçük</span>
-                    </button>
-                    <button class="setting-btn active" id="font-normal" onclick="setFontSize(16)">
-                        <i class="fas fa-font"></i>
-                        <span>Normal</span>
-                    </button>
-                    <button class="setting-btn" id="font-large" onclick="setFontSize(18)">
-                        <i class="fas fa-font" style="font-size:1.3rem"></i>
-                        <span>Büyük</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="setting-divider"></div>
-
-            <!-- HIZLI İŞLEMLER -->
-            <div class="setting-group">
-                <div class="setting-label">
-                    <i class="fas fa-bolt"></i> Hızlı İşlemler
-                </div>
-                <div class="action-row">
-                    <button class="action-btn-large primary" onclick="refreshNews(); toggleSettings();">
-                        <i class="fas fa-sync-alt"></i>
-                        Yenile
-                    </button>
-                    <button class="action-btn-large" onclick="clearAllData()">
-                        <i class="fas fa-trash"></i>
-                        Temizle
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- MODAL -->
@@ -1903,112 +1229,71 @@
     </div>
 
     <script>
-        // --- TOAST BİLDİRİM SİSTEMİ ---
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            
-            toast.innerHTML = `
-                <i class="fas ${icons[type]}"></i>
-                <div class="toast-message">${message}</div>
-            `;
-            
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'slideIn 0.3s ease-out reverse';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // --- 1. KAYNAK LİSTESİ ---
+        // --- 1. KAYNAK LİSTESİ (HAVA DURUMU VE AKOM EKLENDİ) ---
         const sources = {
             gundem: { label: "Gündem", icon: "fa-globe", feeds: [
-                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=guncel"},
-                {name: "DHA", url: "https://www.dha.com.tr/rss.xml"},
-                {name: "İHA", url: "https://www.iha.com.tr/rss.xml"},
-                {name: "TRT Haber", url: "https://www.trthaber.com/sondakika_articles.rss"},
+                {name: "TRT Haber", url: "https://www.trthaber.com/manset_articles.rss"},
                 {name: "NTV", url: "https://www.ntv.com.tr/gundem.rss"},
-                {name: "HaberTürk", url: "https://www.haberturk.com/rss/manset.xml"},
-                {name: "Cumhuriyet", url: "https://www.cumhuriyet.com.tr/rss"},
-                {name: "Sözcü", url: "https://www.sozcu.com.tr/rss/tum-haberler.xml"},
-                {name: "Hürriyet", url: "https://www.hurriyet.com.tr/rss/anasayfa"}
+                {name: "Habertürk", url: "https://www.haberturk.com/rss/manset.xml"},
+                {name: "Sözcü", url: "https://www.sozcu.com.tr/rss/gundem.xml"}
             ]},
             dunya: { label: "Dünya", icon: "fa-earth-americas", feeds: [
-                {name: "TRT Haber Dünya", url: "https://www.trthaber.com/dunya_articles.rss"},
-                {name: "TRT World", url: "https://www.trtworld.com/feed/rss"},
+                {name: "TRT Dünya", url: "https://www.trthaber.com/dunya_articles.rss"},
                 {name: "NTV Dünya", url: "https://www.ntv.com.tr/dunya.rss"},
-                {name: "CNN Türk Dünya", url: "https://www.cnnturk.com/feed/rss/dunya/news"},
-                {name: "Hürriyet Dünya", url: "https://www.hurriyet.com.tr/rss/dunya"},
-                {name: "Sözcü Dünya", url: "https://www.sozcu.com.tr/kategori/dunya/feed/"},
-                {name: "Cumhuriyet Dünya", url: "https://www.cumhuriyet.com.tr/rss/12"},
-                {name: "BBC Türkçe", url: "https://feeds.bbci.co.uk/turkce/rss.xml"},
-                {name: "Euronews TR", url: "https://tr.euronews.com/rss"},
-                {name: "DW Türkçe", url: "https://rss.dw.com/xml/rss-tr-all"},
-                {name: "VOA Türkçe", url: "https://www.amerikaninsesi.com/api/z$_pievvqy"}
+                {name: "Sözcü Dünya", url: "https://www.sozcu.com.tr/rss/dunya.xml"},
+                {name: "BBC Türkçe", url: "https://feeds.bbci.co.uk/turkce/rss.xml"}
             ]},
             ekonomi: { label: "Ekonomi", icon: "fa-chart-line", feeds: [
-                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=ekonomi"},
-                {name: "Bloomberg HT", url: "https://www.bloomberght.com/rss"},
+                {name: "TRT Ekonomi", url: "https://www.trthaber.com/ekonomi_articles.rss"},
                 {name: "NTV Ekonomi", url: "https://www.ntv.com.tr/ekonomi.rss"},
-                {name: "Investing", url: "https://tr.investing.com/rss/news.rss"}
+                {name: "Sözcü Ekonomi", url: "https://www.sozcu.com.tr/rss/ekonomi.xml"},
+                {name: "Habertürk Ekonomi", url: "https://www.haberturk.com/rss/ekonomi.xml"}
             ]},
             siyaset: { label: "Siyaset", icon: "fa-landmark", feeds: [
-                {name: "TRT Haber Siyaset", url: "https://www.trthaber.com/siyaset_articles.rss"},
+                {name: "TRT Siyaset", url: "https://www.trthaber.com/siyaset_articles.rss"},
                 {name: "NTV Siyaset", url: "https://www.ntv.com.tr/siyaset.rss"},
-                {name: "CNN Türk Siyaset", url: "https://www.cnnturk.com/feed/rss/siyaset/news"},
-                {name: "Hürriyet Siyaset", url: "https://www.hurriyet.com.tr/rss/siyaset"},
-                {name: "Sözcü Siyaset", url: "https://www.sozcu.com.tr/kategori/gunun-icinden/feed/"},
-                {name: "Cumhuriyet Siyaset", url: "https://www.cumhuriyet.com.tr/rss/4"}
+                {name: "Sözcü", url: "https://www.sozcu.com.tr/rss/gundem.xml"}
             ]},
             spor: { label: "Spor", icon: "fa-futbol", feeds: [
-                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=spor"},
-                {name: "DHA Spor", url: "https://www.dha.com.tr/rss/spor.xml"},
-                {name: "Fanatik", url: "https://www.fanatik.com.tr/rss/son-dakika"},
-                {name: "Fotomaç", url: "https://www.fotomac.com.tr/rss/anasayfa.xml"},
+                {name: "TRT Spor", url: "https://www.trthaber.com/spor_articles.rss"},
                 {name: "NTV Spor", url: "https://www.ntv.com.tr/spor.rss"},
-                {name: "Aspor", url: "https://www.aspor.com.tr/rss/anasayfa.xml"}
+                {name: "Habertürk", url: "https://www.haberturk.com/rss/spor.xml"},
+                {name: "Fotomaç", url: "https://www.fotomac.com.tr/rss/anasayfa.xml"}
             ]},
             teknoloji: { label: "Teknoloji", icon: "fa-microchip", feeds: [
-                {name: "Webrazzi", url: "https://webrazzi.com/feed/"},
-                {name: "ShiftDelete", url: "https://shiftdelete.net/feed/"},
                 {name: "DonanımHaber", url: "https://www.donanimhaber.com/rss/tum/"},
-                {name: "Webtekno", url: "https://www.webtekno.com/rss.xml"},
-                {name: "Chip", url: "https://www.chip.com.tr/rss/"},
-                {name: "Log", url: "https://www.log.com.tr/feed/"}
+                {name: "Webrazzi", url: "https://webrazzi.com/feed/"},
+                {name: "Log", url: "https://www.log.com.tr/feed/"},
+                {name: "TRT Teknoloji", url: "https://www.trthaber.com/bilim_teknoloji_articles.rss"}
             ]},
             bilim: { label: "Bilim", icon: "fa-atom", feeds: [
                 {name: "Evrim Ağacı", url: "https://evrimagaci.org/rss.xml"},
-                {name: "TÜBİTAK", url: "https://bilimgenc.tubitak.gov.tr/rss.xml"},
-                {name: "Popular Science", url: "https://popsci.com.tr/feed/"},
-                {name: "Arkeofili", url: "https://arkeofili.com/feed/"}
+                {name: "Arkeofili", url: "https://arkeofili.com/feed/"},
+                {name: "TRT Bilim", url: "https://www.trthaber.com/bilim_teknoloji_articles.rss"}
             ]},
             otomobil: { label: "Otomobil", icon: "fa-car", feeds: [
                 {name: "Motor1", url: "https://tr.motor1.com/rss/news/all/"},
-                {name: "Arabalar", url: "https://www.arabalar.com.tr/rss"},
-                {name: "Otomobil Gazetesi", url: "https://www.otomobilgazetesi.com/rss.xml"}
+                {name: "Habertürk Oto", url: "https://www.haberturk.com/rss/otomobil.xml"}
             ]},
             magazin: { label: "Magazin", icon: "fa-camera", feeds: [
-                {name: "Onedio", url: "https://onedio.com/support/rss.xml"},
-                {name: "Kelebek", url: "https://www.hurriyet.com.tr/rss/kelebek"},
-                {name: "Milliyet Cadde", url: "https://www.milliyet.com.tr/rss/rssnew/cadde.xml"},
-                {name: "Snob", url: "https://www.snobmagazin.com/rss.xml"}
+                {name: "Sözcü Magazin", url: "https://www.sozcu.com.tr/rss/magazin.xml"},
+                {name: "Habertürk Magazin", url: "https://www.haberturk.com/rss/magazin.xml"},
+                {name: "TRT Yaşam", url: "https://www.trthaber.com/yasam_articles.rss"}
             ]},
             saglik: { label: "Sağlık", icon: "fa-heartbeat", feeds: [
-                {name: "CNN Sağlık", url: "https://www.cnnturk.com/feed/rss/saglik/news"},
-                {name: "NTV Sağlık", url: "https://www.ntv.com.tr/saglik.rss"},
-                {name: "Haber7 Sağlık", url: "https://www.haber7.com/rss/saglik.xml"},
-                {name: "Habertürk Sağlık", url: "https://www.haberturk.com/rss/kategori/saglik.xml"}
+                {name: "Sözcü Sağlık", url: "https://www.sozcu.com.tr/rss/saglik.xml"},
+                {name: "Habertürk Sağlık", url: "https://www.haberturk.com/rss/kategori/saglik.xml"},
+                {name: "TRT Sağlık", url: "https://www.trthaber.com/saglik_articles.rss"}
+            ]},
+            kultur: { label: "Kültür Sanat", icon: "fa-palette", feeds: [
+                {name: "TRT Kültür", url: "https://www.trthaber.com/kultur_sanat_articles.rss"},
+                {name: "Sözcü Kültür", url: "https://www.sozcu.com.tr/rss/kultur-sanat.xml"},
+                {name: "Habertürk Kültür", url: "https://www.haberturk.com/rss/kategori/kultur-sanat.xml"}
             ]},
             hava: { label: "Hava Durumu", icon: "fa-cloud-sun", feeds: [
-                {name: "MGM Genel", url: "https://www.mgm.gov.tr/FTPDATA/rss/genel.xml"},
-                {name: "MGM Uyarılar", url: "https://www.mgm.gov.tr/FTPDATA/rss/uyarilar.xml"}
+                {name: "MGM & Meteoroloji", url: "https://news.google.com/rss/search?q=Meteoroloji+hava+durumu&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "AKOM", url: "https://news.google.com/rss/search?q=AKOM+hava+durumu&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Genel Hava Durumu", url: "https://news.google.com/rss/search?q=hava+durumu+uyar%C4%B1s%C4%B1&hl=tr&gl=TR&ceid=TR:tr"}
             ]},
             favoriler: { label: "Favorilerim", icon: "fa-heart", feeds: [] }
         };
@@ -2022,9 +1307,9 @@
             teknoloji: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80",
             bilim: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=500&q=80",
             otomobil: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=500&q=80",
-            kultur: "https://images.unsplash.com/photo-1499856871940-a09627c6d7db?w=500&q=80",
             magazin: "https://images.unsplash.com/photo-1496449903678-68ddcb189a24?w=500&q=80",
             saglik: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=500&q=80",
+            kultur: "https://images.unsplash.com/photo-1499856871940-a09627c6d7db?w=500&q=80",
             hava: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=500&q=80",
             favoriler: "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=500&q=80"
         };
@@ -2056,12 +1341,6 @@
             document.documentElement.style.setProperty('--base-font-size', size + 'px');
             localStorage.setItem('font_size', size);
         }
-        
-        function changeFontSize() {
-            if (fontSize === 14) setFontSize(16);
-            else if (fontSize === 16) setFontSize(18);
-            else setFontSize(14);
-        }
 
         // GÖRÜNÜM
         function setView(view) {
@@ -2075,15 +1354,6 @@
                 grid.classList.remove('list-view');
             }
             localStorage.setItem('layout_mode', view);
-        }
-        
-        function toggleLayout() {
-            const grid = document.getElementById('news-grid');
-            if (grid.classList.contains('list-view')) {
-                setView('grid');
-            } else {
-                setView('list');
-            }
         }
 
         // TEMA
@@ -2122,8 +1392,6 @@
             } else {
                 panel.classList.add('show');
                 icon.style.transform = 'rotate(90deg)';
-                
-                // Mevcut ayarları göster
                 const savedTheme = localStorage.getItem(THEME_KEY) || 'light';
                 const savedView = localStorage.getItem('layout_mode') || 'grid';
                 const savedFont = localStorage.getItem('font_size') || '16';
@@ -2132,11 +1400,6 @@
                 setView(savedView);
                 setFontSize(parseInt(savedFont));
             }
-        }
-
-        // BİLDİRİMLER
-        function toggleNotifications() {
-            alert('Bildirimler özelliği yakında eklenecek!');
         }
 
         // TOAST BİLDİRİMİ
@@ -2155,10 +1418,7 @@
             }
             
             toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); }, 3000);
         }
 
         // YUKARI ÇIK BUTONU
@@ -2172,75 +1432,56 @@
             const scrollProgress = document.getElementById('scrollProgress');
             const quickMenu = document.getElementById('quickMenu');
             
-            // Yukarı çık butonu
             if (window.scrollY > 500) {
                 scrollTop.classList.add('show');
-                // Hızlı menü butonlarını göster
-                const buttons = quickMenu.querySelectorAll('.quick-menu-btn');
-                buttons.forEach((btn, index) => {
-                    setTimeout(() => {
-                        btn.classList.add('show');
-                    }, index * 100);
+                quickMenu.querySelectorAll('.quick-menu-btn').forEach((btn, index) => {
+                    setTimeout(() => { btn.classList.add('show'); }, index * 100);
                 });
             } else {
                 scrollTop.classList.remove('show');
-                // Hızlı menü butonlarını gizle
-                const buttons = quickMenu.querySelectorAll('.quick-menu-btn');
-                buttons.forEach(btn => {
+                quickMenu.querySelectorAll('.quick-menu-btn').forEach(btn => {
                     btn.classList.remove('show');
                 });
             }
             
-            // Progress bar
             const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
             const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
             const scrolled = (winScroll / height) * 100;
             scrollProgress.style.width = scrolled + '%';
         });
 
-        // Arama kutusuna odaklan
         function focusSearch() {
             document.getElementById('search-input').focus();
             showToast('Arama kutusuna odaklandı', 'info');
         }
 
-        // Tema ikonu güncelle
         function updateThemeIcon() {
             const isDark = document.body.classList.contains('dark-mode');
             const icon = document.querySelector('#quickTheme i');
-            if (icon) {
-                icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-            }
+            if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
         }
 
-        // Tema değiştiğinde toast göster
         const originalSetTheme = setTheme;
         setTheme = function(theme) {
             originalSetTheme(theme);
-            const themeName = theme === 'dark' ? 'Karanlık' : 'Aydınlık';
-            showToast(`${themeName} tema aktif`, 'info');
+            showToast(`${theme === 'dark' ? 'Karanlık' : 'Aydınlık'} tema aktif`, 'info');
             updateThemeIcon();
         };
 
-        // Görünüm değiştiğinde toast göster
         const originalSetView = setView;
         setView = function(view) {
             originalSetView(view);
-            const viewName = view === 'list' ? 'Liste' : 'Kart';
-            showToast(`${viewName} görünümü aktif`, 'info');
+            showToast(`${view === 'list' ? 'Liste' : 'Kart'} görünümü aktif`, 'info');
         };
 
-        // Yazı boyutu değiştiğinde toast göster
         const originalSetFontSize = setFontSize;
         setFontSize = function(size) {
             originalSetFontSize(size);
-            const sizeName = size === 14 ? 'Küçük' : size === 18 ? 'Büyük' : 'Normal';
-            showToast(`Yazı boyutu: ${sizeName}`, 'info');
+            showToast(`Yazı boyutu: ${size === 14 ? 'Küçük' : size === 18 ? 'Büyük' : 'Normal'}`, 'info');
         };
 
         // HIZLI İŞLEMLER
         function clearCache() {
-            // Favoriler hariç tüm cache'i temizle
             const favs = localStorage.getItem(FAV_KEY);
             const theme = localStorage.getItem(THEME_KEY);
             const fontSize = localStorage.getItem('font_size');
@@ -2248,7 +1489,6 @@
             
             localStorage.clear();
             
-            // Önemli ayarları geri yükle
             if (favs) localStorage.setItem(FAV_KEY, favs);
             if (theme) localStorage.setItem(THEME_KEY, theme);
             if (fontSize) localStorage.setItem('font_size', fontSize);
@@ -2259,10 +1499,7 @@
 
         function exportFavorites() {
             const favs = getFavorites();
-            if (favs.length === 0) {
-                showToast('Favorilerinizde haber yok', 'info');
-                return;
-            }
+            if (favs.length === 0) { showToast('Favorilerinizde haber yok', 'info'); return; }
             
             const dataStr = JSON.stringify(favs, null, 2);
             const dataBlob = new Blob([dataStr], {type: 'application/json'});
@@ -2272,23 +1509,14 @@
             link.download = 'mugol-favoriler-' + new Date().toISOString().split('T')[0] + '.json';
             link.click();
             URL.revokeObjectURL(url);
-            
             showToast(`${favs.length} favori indirildi!`, 'success');
         }
 
         function shareApp() {
-            const shareData = {
-                title: 'MuGöl Haber',
-                text: 'Türkiye\'nin en kapsamlı haber platformu!',
-                url: window.location.href
-            };
-            
+            const shareData = { title: 'MuGöl Haber', text: 'Türkiye\'nin en kapsamlı haber platformu!', url: window.location.href };
             if (navigator.share) {
-                navigator.share(shareData)
-                    .then(() => showToast('Paylaşıldı!', 'success'))
-                    .catch(() => {});
+                navigator.share(shareData).then(() => showToast('Paylaşıldı!', 'success')).catch(() => {});
             } else {
-                // Fallback: URL'i kopyala
                 navigator.clipboard.writeText(window.location.href)
                     .then(() => showToast('Link kopyalandı!', 'success'))
                     .catch(() => showToast('Paylaşım desteklenmiyor', 'info'));
@@ -2327,7 +1555,6 @@
             document.getElementById('status-text').innerText = "Yükleniyor...";
             document.getElementById('filter-container').innerHTML = ''; 
             
-            // Gelişmiş skeleton loader
             const skeletonCards = Array(6).fill(null).map(() => `
                 <div class="card skeleton-card">
                     <div class="skeleton skeleton-img"></div>
@@ -2338,10 +1565,7 @@
             `).join('');
             grid.innerHTML = skeletonCards;
 
-            if (catKey === 'favoriler') {
-                loadFavorites();
-                return;
-            }
+            if (catKey === 'favoriler') { loadFavorites(); return; }
 
             const feeds = sources[catKey].feeds;
             let tempNews = [];
@@ -2354,18 +1578,15 @@
                         return data.items.map(i => ({...i, specificSource: feed.name, categoryKey: catKey}));
                     }
                     return [];
-                })
-                .catch(() => [])
+                }).catch(() => [])
             );
 
             const results = await Promise.all(promises);
             results.forEach(arr => tempNews = tempNews.concat(arr));
-            
             tempNews.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
             allNewsData = tempNews;
             
             document.getElementById('status-text').innerText = `${allNewsData.length} Haber`;
-            updateStats(); // İstatistikleri güncelle
             createSourceFilters(allNewsData);
             renderGrid(allNewsData, catKey);
             updateTicker(allNewsData);
@@ -2464,12 +1685,10 @@
                 return;
             }
 
-            // Boş haberleri filtrele
             const validItems = items.filter(item => {
                 const hasTitle = item.title && item.title.trim().length > 0;
-                const hasDescription = item.description && item.description.trim().length > 0;
                 const hasLink = item.link && item.link.trim().length > 0;
-                return hasTitle && hasDescription && hasLink;
+                return hasTitle && hasLink;
             });
 
             if(validItems.length === 0) {
@@ -2484,7 +1703,7 @@
                     let imgUrl = null;
                     if(item.enclosure?.link) imgUrl = item.enclosure.link;
                     else if(item.thumbnail) imgUrl = item.thumbnail;
-                    else {
+                    else if(item.description) {
                         let m = item.description.match(/src="([^"]+)"/);
                         if(m) imgUrl = m[1];
                     }
@@ -2493,14 +1712,42 @@
                     
                     const date = new Date(item.pubDate);
                     timeStr = isNaN(date.getTime()) ? "" : date.getHours().toString().padStart(2,'0') + ':' + date.getMinutes().toString().padStart(2,'0');
-                    cleanDesc = item.description.replace(/<[^>]*>?/gm, '');
                     
-                    sourceName = item.specificSource || item.sourceName || "Haber"; 
+                    // RSS'ten en detaylı bilgiyi çekme mantığı
+                    let rawDesc = "";
+                    if (item.content && item.content.length > (item.description ? item.description.length : 0)) {
+                        rawDesc = item.content;
+                    } else if (item.description) {
+                        rawDesc = item.description;
+                    }
+
+                    // HTML etiketlerini ve fazla boşlukları temizle
+                    cleanDesc = rawDesc.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
                     
+                    // Kaynak adını başlık ve açıklamadan temizle
+                    const srcName = item.specificSource || item.sourceName || "";
+                    // Sondaki " - Kaynak" / " | Kaynak" ekini sil
+                    cleanDesc = cleanDesc.replace(/\s*[-–|]\s*[^-–|]{2,50}$/, '').trim();
+                    // Açıklama yoksa veya başlıkla (temizlenmiş haliyle) aynıysa boş bırak
+                    const titleClean = item.title.replace(/\s*[-–|]\s*[^-–|]{2,50}$/, '').trim().toLowerCase();
+                    if (!cleanDesc || cleanDesc.toLowerCase() === item.title.toLowerCase() || cleanDesc.toLowerCase() === titleClean) {
+                        cleanDesc = '';
+                    }
+                    
+                    sourceName = item.specificSource || item.sourceName || "Haber";
+                    // Başlıktaki sondaki " - Kaynak" ekini bir kez temizle ve sakla
+                    item.cleanTitle = item.title.replace(/\s*[-–|]\s*[^-–|]{2,50}$/, '').trim();
+
                     item.displayImg = displayImg;
                     item.cleanDesc = cleanDesc;
                     item.timeStr = timeStr;
                     item.sourceName = sourceName;
+                    
+                    const pubDate = new Date(item.pubDate);
+                    const now = new Date();
+                    const hoursDiff = (now - pubDate) / (1000 * 60 * 60);
+                    item.isNew = hoursDiff < 2 && !isNaN(hoursDiff);
+                    
                     item.processed = true;
                 } else {
                     displayImg = item.displayImg;
@@ -2508,33 +1755,34 @@
                     timeStr = item.timeStr;
                     sourceName = item.sourceName;
                 }
+                const displayTitle = item.cleanTitle || item.title;
 
                 const isFav = isFavorite(item.link);
                 const activeClass = isFav ? 'active' : '';
                 const heartIcon = isFav ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
 
-                // Yeni haber badge kontrolü (son 2 saat içinde yayınlanan)
-                const pubDate = new Date(item.pubDate);
-                const now = new Date();
-                const hoursDiff = (now - pubDate) / (1000 * 60 * 60);
-                const isNew = hoursDiff < 2 && !isNaN(hoursDiff);
-                const newBadge = isNew ? '<span class="new-badge">YENİ</span>' : '';
+                const breakingClass = item.isNew ? 'breaking-card' : '';
+                const breakingRibbon = item.isNew ? `<div class="breaking-ribbon"><i class="fas fa-exclamation-circle" style="animation: flashAlert 1s infinite; margin-right:4px;"></i> SON DAKİKA</div>` : '';
 
-                // Okuma süresi hesaplama (ortalama 200 kelime/dakika)
                 const wordCount = cleanDesc.split(' ').length + item.title.split(' ').length;
                 const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
                 const card = document.createElement('div');
-                card.className = 'card';
+                card.className = `card ${breakingClass}`;
                 card.onclick = (e) => {
                     if(!e.target.closest('.fav-btn')) openModal(item.link);
                 };
                 
+                // HTML attr kırılmalarına karşı güvenlik encode işlemleri
+                const safeTitle = displayTitle.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                const safeSource = sourceName.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                const safeDesc = cleanDesc.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+
                 card.innerHTML = `
                     <div class="card-img-wrap">
+                        ${breakingRibbon}
                         <img src="${displayImg}" class="card-img" onerror="this.src='./icon-192.png'">
                         <div class="source-tag"><i class="fas fa-bolt"></i> ${sourceName}</div>
-                        ${newBadge}
                         <button class="fav-btn ${activeClass}" data-link="${item.link}">${heartIcon}</button>
                     </div>
                     <div class="card-body">
@@ -2542,13 +1790,18 @@
                             <span class="card-meta-item"><i class="far fa-clock"></i> ${timeStr || 'Bugün'}</span>
                             <span class="card-meta-item"><i class="fas fa-book-open"></i> ${readTime} dk</span>
                         </div>
-                        <div class="card-title">${item.title}</div>
+                        <div class="card-title">${displayTitle}</div>
                         <div class="card-text">${cleanDesc}</div>
                         <div style="display:flex; gap:8px;">
                             <button class="read-btn" style="flex:1;">Haberi Oku <i class="fas fa-arrow-right"></i></button>
-                            <button class="share-btn" data-link="${item.link}" data-title="${item.title.replace(/"/g, '&quot;')}" 
+                            <button class="share-btn" data-link="${item.link}" data-title="${safeTitle}" 
                                     style="width:50px; height:50px; border-radius:12px; border:2px solid var(--border); background:var(--bg-card); color:var(--primary); cursor:pointer; transition:0.3s;">
                                 <i class="fas fa-share-alt"></i>
+                            </button>
+                            <button class="dl-img-btn" data-img="${displayImg}" data-title="${safeTitle}" data-source="${safeSource}" data-desc="${safeDesc}" data-time="${timeStr || 'Bugün'}" data-read="${readTime}" data-isnew="${item.isNew}"
+                                    title="Sosyal medya için indir"
+                                    style="width:50px; height:50px; border-radius:12px; border:2px solid var(--border); background:var(--bg-card); color:#059669; cursor:pointer; transition:0.3s; flex-shrink:0;">
+                                <i class="fas fa-download"></i>
                             </button>
                         </div>
                     </div>
@@ -2563,12 +1816,18 @@
                     shareNews(item.title, item.link);
                 });
 
+                card.querySelector('.dl-img-btn').addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const btn = e.currentTarget;
+                    const isNewFlag = btn.dataset.isnew === "true";
+                    downloadNewsImage(btn.dataset.img, btn.dataset.title, btn.dataset.source, btn.dataset.desc, btn.dataset.time, btn.dataset.read, isNewFlag);
+                });
+
                 grid.appendChild(card);
             });
         }
 
         function openModal(link) {
-            // İframe yükleme sorunu olursa yeni sekmede aç
             const frame = document.getElementById('news-frame');
             const modal = document.getElementById('modal');
             
@@ -2576,7 +1835,6 @@
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
             
-            // 5 saniye sonra hala yüklenemediyse uyar
             setTimeout(() => {
                 if (frame.src === link) {
                     const confirmation = confirm('Haber yüklenemiyor. Yeni sekmede açmak ister misiniz?');
@@ -2594,83 +1852,355 @@
             showToast('Haber yeni sekmede açıldı', 'success');
         }
         
-        // Haber paylaşma
         function shareNews(title, link) {
             if (navigator.share) {
-                navigator.share({
-                    title: title,
-                    url: link
-                }).then(() => {
-                    showToast('Haber paylaşıldı!', 'success');
-                }).catch(() => {});
+                navigator.share({ title: title, url: link }).then(() => showToast('Haber paylaşıldı!', 'success')).catch(() => {});
             } else {
                 copyToClipboard(link);
                 showToast('Link kopyalandı!', 'success');
             }
         }
-        
-        // Tümünü okundu işaretle
-        function markAllAsRead() {
-            const readNews = JSON.parse(localStorage.getItem('readNews') || '[]');
-            allNewsData.forEach(item => {
-                if (!readNews.includes(item.link)) {
-                    readNews.push(item.link);
+
+        // ── ÖNIZLEME MODALI ──
+        let _previewData = {};
+
+        function openImagePreviewModal(imgSrc, title, sourceName, desc, timeStr, readTime, isNew) {
+            _previewData = { imgSrc, title, sourceName, desc, timeStr, readTime, isNew };
+            renderPreviewCanvas();
+            document.getElementById('imgPreviewModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImagePreviewModal() {
+            document.getElementById('imgPreviewModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function renderPreviewCanvas() {
+            const color = document.getElementById('bgColorPicker').value;
+            const { imgSrc, title, sourceName, desc, timeStr, readTime, isNew } = _previewData;
+            buildNewsCanvas(imgSrc, title, sourceName, desc, timeStr, readTime, isNew, color).then(canvas => {
+                const preview = document.getElementById('previewCanvas');
+                preview.width = canvas.width;
+                preview.height = canvas.height;
+                preview.getContext('2d').drawImage(canvas, 0, 0);
+            });
+        }
+
+        function downloadFromPreview() {
+            const color = document.getElementById('bgColorPicker').value;
+            const { imgSrc, title, sourceName, desc, timeStr, readTime, isNew } = _previewData;
+            buildNewsCanvas(imgSrc, title, sourceName, desc, timeStr, readTime, isNew, color).then(canvas => {
+                const dlLink = document.createElement('a');
+                dlLink.download = 'mugol-haber-' + Date.now() + '.png';
+                dlLink.href = canvas.toDataURL('image/png');
+                dlLink.click();
+                showToast('Görsel indirildi! 📥', 'success');
+                closeImagePreviewModal();
+            });
+        }
+
+        function downloadNewsImage(imgSrc, title, sourceName, desc, timeStr, readTime, isNew) {
+            openImagePreviewModal(imgSrc, title, sourceName, desc, timeStr, readTime, isNew);
+        }
+
+        function wrapText(ctx, text, maxWidth) {
+            if (!text) return [];
+            const words = text.split(' ');
+            const lines = [];
+            let current = '';
+            for (let w of words) {
+                const test = current ? current + ' ' + w : w;
+                if (ctx.measureText(test).width > maxWidth && current) {
+                    lines.push(current);
+                    current = w;
+                } else {
+                    current = test;
                 }
-            });
-            localStorage.setItem('readNews', JSON.stringify(readNews));
-            
-            // Yeni badge'leri kaldır
-            document.querySelectorAll('.new-badge').forEach(badge => {
-                badge.style.opacity = '0.3';
-                badge.textContent = 'OKUNDU';
-            });
-            
-            showToast('Tüm haberler okundu olarak işaretlendi', 'success');
+            }
+            if (current) lines.push(current);
+            return lines;
         }
 
-        // İstatistikleri güncelle
-        function updateStats() {
-            // Stats kaldırıldı, bu fonksiyon artık boş
+        function roundRect(ctx, x, y, w, h, r) {
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.lineTo(x + w - r, y);
+            ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+            ctx.lineTo(x + w, y + h - r);
+            ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+            ctx.lineTo(x + r, y + h);
+            ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+            ctx.lineTo(x, y + r);
+            ctx.quadraticCurveTo(x, y, x + r, y);
+            ctx.closePath();
         }
 
-        // Zamana göre filtrele
-        let originalNewsData = [];
-        function filterByTime(period) {
-            // Buton aktif durumunu güncelle
-            document.querySelectorAll('.quick-filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.closest('.quick-filter-btn').classList.add('active');
+        // ── İNDİRİLEBİLİR KART: SABİT 1080x1080 VE AKILLI YAZI ÖLÇEKLENDİRME ──
+        async function buildNewsCanvas(imgSrc, title, sourceName, desc, timeStr, readTime, isNew, bgColor) {
+            showToast('Görsel hazırlanıyor...', 'info');
 
-            const now = new Date();
-            let filtered = [];
-
-            switch(period) {
-                case '1h':
-                    const oneHourAgo = new Date(now - 60 * 60 * 1000);
-                    filtered = allNewsData.filter(item => new Date(item.pubDate) >= oneHourAgo);
-                    break;
-                case '3h':
-                    const threeHoursAgo = new Date(now - 3 * 60 * 60 * 1000);
-                    filtered = allNewsData.filter(item => new Date(item.pubDate) >= threeHoursAgo);
-                    break;
-                case 'today':
-                    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                    filtered = allNewsData.filter(item => new Date(item.pubDate) >= todayStart);
-                    break;
-                default:
-                    filtered = allNewsData;
+            function cleanText(raw) {
+                if (!raw) return '';
+                return raw.replace(/<[^>]+>/g, '')
+                          .replace(/&quot;/gi, '"')
+                          .replace(/&#34;/gi, '"')
+                          .replace(/&amp;/gi, '&')
+                          .replace(/&lt;/gi, '<')
+                          .replace(/&gt;/gi, '>')
+                          .replace(/&apos;/gi, "'")
+                          .replace(/&#39;/gi, "'")
+                          .replace(/&nbsp;/gi, ' ')
+                          .replace(/&[a-z]{2,6};/gi, '')
+                          .replace(/&#\d+;/gi, '')
+                          .replace(/\s+/g, ' ')
+                          .trim();
             }
 
-            if (filtered.length === 0) {
-                showToast('Bu zaman aralığında haber yok', 'info');
-                filtered = allNewsData;
+            // Başlık: HTML temizliği + sonundaki " - Kaynak" / " | Kaynak" ekini sil
+            let rawTitle = cleanText(title);
+            rawTitle = rawTitle.replace(/\s*[-–|]\s*[^-–|]{2,50}$/, '').trim();
+            const cleanT = rawTitle;
+            
+            // Açıklama: HTML temizliği + kaynak eki sil + başlıkla aynıysa boş bırak
+            let rawDesc = cleanText(desc);
+            rawDesc = rawDesc.replace(/\s*[-–|]\s*[^-–|]{2,50}$/, '').trim();
+            if (!rawDesc || rawDesc.toLowerCase().trim() === cleanT.toLowerCase().trim()) {
+                rawDesc = '';
+            }
+            const cleanD = rawDesc;
+
+            // SABİT CANVAS BOYUTLARI
+            const W = 1080;
+            const H = 1080;
+            const MARGIN = 50;
+            const IMG_W = W - MARGIN * 2;
+            const IMG_H = 380; // Resim için ayrılan sabit maksimum yükseklik
+            
+            let imgLoaded = false;
+            let img = new Image();
+            img.crossOrigin = 'anonymous';
+            try {
+                await new Promise((resolve) => {
+                    img.onload = () => { imgLoaded = true; resolve(); };
+                    img.onerror = () => resolve();
+                    img.src = imgSrc + (imgSrc.includes('?') ? '&' : '?') + '_mg=' + Date.now();
+                });
+            } catch(e) {}
+
+            const canvas = document.createElement('canvas');
+            canvas.width = W; canvas.height = H;
+            const ctx = canvas.getContext('2d');
+
+            const hexToRgb = (hex) => {
+                const r = parseInt(hex.slice(1,3),16);
+                const g = parseInt(hex.slice(3,5),16);
+                const b = parseInt(hex.slice(5,7),16);
+                return {r,g,b};
+            };
+            const bg = hexToRgb(bgColor || '#0c1a3a');
+            
+            const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+            bgGrad.addColorStop(0, `rgb(${Math.max(0,bg.r-10)},${Math.max(0,bg.g-10)},${Math.max(0,bg.b-10)})`);
+            bgGrad.addColorStop(1, `rgb(${Math.min(255,bg.r+20)},${Math.min(255,bg.g+20)},${Math.min(255,bg.b+20)})`);
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, W, H);
+            
+            const accentGrad = ctx.createLinearGradient(0, 0, 0, H);
+            accentGrad.addColorStop(0, '#3b82f6');
+            accentGrad.addColorStop(1, '#1e40af');
+            ctx.fillStyle = accentGrad;
+            ctx.fillRect(0, 0, 14, H);
+
+            // ── 2. HABER GÖRSELİ (Cover ile alanı tam doldurur, bulanıklık kalktı) ──
+            if (imgLoaded) {
+                ctx.save();
+                ctx.beginPath();
+                roundRect(ctx, MARGIN, MARGIN, IMG_W, IMG_H, 20);
+                ctx.clip();
+                
+                // Resmi kenarlara tam sığdırmak (object-fit: cover)
+                const ratio = Math.max(IMG_W / img.width, IMG_H / img.height);
+                const dw = img.width * ratio;
+                const dh = img.height * ratio;
+                
+                // Resmi tam ortala ve çiz
+                ctx.drawImage(img, MARGIN + (IMG_W - dw) / 2, MARGIN + (IMG_H - dh) / 2, dw, dh);
+                
+                ctx.restore();
+            } else {
+                ctx.save();
+                ctx.beginPath();
+                roundRect(ctx, MARGIN, MARGIN, IMG_W, IMG_H, 20);
+                ctx.fillStyle = 'rgba(255,255,255,0.05)';
+                ctx.fill();
+                ctx.restore();
             }
 
-            renderGrid(filtered, currentCategory);
+            // ── SON DAKİKA ROZETİ ──
+            if (isNew) {
+                ctx.save();
+                const bX = MARGIN + 20;
+                const bY = MARGIN + 20;
+                
+                ctx.shadowColor = 'rgba(239, 68, 68, 0.6)';
+                ctx.shadowBlur = 15;
+                ctx.shadowOffsetY = 4;
+                
+                ctx.fillStyle = '#ef4444';
+                roundRect(ctx, bX, bY, 175, 42, 8);
+                const badgeGrad = ctx.createLinearGradient(bX, 0, bX + 175, 0);
+                badgeGrad.addColorStop(0, '#ef4444');
+                badgeGrad.addColorStop(1, '#b91c1c');
+                ctx.fillStyle = badgeGrad;
+                ctx.fill();
+                
+                ctx.shadowColor = 'transparent';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '900 18px Nunito, Arial, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('SON DAKİKA', bX + 87.5, bY + 23);
+                ctx.restore();
+            }
+
+            let currentY = MARGIN + IMG_H + 25; // y = 50 + 380 + 25 = 455
+
+            // ── 3. KAYNAK & METADATA ROZETİ ──
+            const SOURCE_H = 46;
+            ctx.font = 'bold 22px Nunito, Arial, sans-serif';
+            const sourceText = (sourceName || 'MuGöl Haber').toUpperCase();
+            const sourceW = ctx.measureText(sourceText).width;
+            
+            ctx.fillStyle = '#3b82f6';
+            roundRect(ctx, MARGIN, currentY, sourceW + 30, SOURCE_H, 12);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(sourceText, MARGIN + (sourceW + 30)/2, currentY + (SOURCE_H/2));
+            
+            ctx.textAlign = 'left';
+            ctx.font = '600 22px Nunito, Arial, sans-serif';
+            ctx.fillStyle = 'rgba(255,255,255,0.7)';
+            const metaInfo = `•   ${timeStr || 'Bugün'}   •   ${readTime || 1} dk okuma`;
+            ctx.fillText(metaInfo, MARGIN + sourceW + 50, currentY + (SOURCE_H/2));
+
+            currentY += SOURCE_H + 25; // y = 455 + 46 + 25 = 526
+
+            // ── 4. BAŞLIK (Akıllı Ölçekleme & Kırpma) ──
+            let titleFontSize = 46;
+            let titleLH = 60;
+            if (cleanT.length > 90) { titleFontSize = 38; titleLH = 52; } 
+            
+            ctx.font = `bold ${titleFontSize}px Nunito, Arial, sans-serif`;
+            let titleLines = wrapText(ctx, cleanT, IMG_W);
+            
+            // Başlığı maksimum 3 satıra sınırla
+            if (titleLines.length > 3) {
+                titleLines = titleLines.slice(0, 3);
+                titleLines[2] = titleLines[2].replace(/\s+\S*$/, '') + '...';
+            }
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.textBaseline = 'top';
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 3;
+            titleLines.forEach((line, i) => {
+                ctx.fillText(line, MARGIN, currentY + i * titleLH);
+            });
+            ctx.shadowColor = 'transparent';
+            
+            currentY += (titleLines.length * titleLH) + 25; 
+
+            // ── 5. AÇIKLAMA METNİ ──
+            const BOTTOM_BAR_Y = 970; 
+            const MAX_DESC_LINES = 2;
+
+            if (cleanD) {
+                let descFontSize = 28;
+                let descLH = 42;
+
+                ctx.font = `500 ${descFontSize}px Nunito, Arial, sans-serif`;
+                let descLines = wrapText(ctx, cleanD, IMG_W - 50);
+                
+                // Maksimum 2 satıra sınırla
+                if (descLines.length > MAX_DESC_LINES) {
+                    descLines = descLines.slice(0, MAX_DESC_LINES);
+                    descLines[MAX_DESC_LINES - 1] = descLines[MAX_DESC_LINES - 1].replace(/\s+\S*$/, '') + '...';
+                }
+
+                const descBoxH = MAX_DESC_LINES * descLH + 40;
+
+                ctx.fillStyle = 'rgba(255,255,255,0.06)';
+                ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+                ctx.lineWidth = 2;
+                roundRect(ctx, MARGIN, currentY, IMG_W, descBoxH, 16);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.fillStyle = '#3b82f6';
+                roundRect(ctx, MARGIN - 2, currentY + 15, 5, descBoxH - 30, 3);
+                ctx.fill();
+
+                ctx.fillStyle = 'rgba(255,255,255,0.9)';
+                descLines.forEach((line, i) => {
+                    ctx.fillText(line, MARGIN + 25, currentY + 20 + i * descLH);
+                });
+            }
+
+            // ── 6. ALT BİLGİ & LOGO BARI (Sabit Y: 970) ──
+            ctx.fillStyle = 'rgba(255,255,255,0.15)';
+            ctx.fillRect(MARGIN, BOTTOM_BAR_Y, IMG_W, 2);
+            
+            let logoY = BOTTOM_BAR_Y + 25; 
+
+            let logoLoaded = false;
+            try {
+                const logoImg = new Image();
+                logoImg.crossOrigin = 'anonymous';
+                await new Promise((resolve) => {
+                    logoImg.onload = () => { logoLoaded = true; resolve(); };
+                    logoImg.onerror = () => resolve();
+                    logoImg.src = './icon-192.png';
+                });
+                if (logoLoaded) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.arc(MARGIN + 28, logoY + 28, 28, 0, Math.PI * 2);
+                    ctx.clip();
+                    ctx.drawImage(logoImg, MARGIN, logoY, 56, 56);
+                    ctx.restore();
+                }
+            } catch(e) {}
+
+            if (!logoLoaded) {
+                ctx.fillStyle = '#3b82f6';
+                ctx.beginPath();
+                ctx.arc(MARGIN + 28, logoY + 28, 28, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 20px Arial, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('MG', MARGIN + 28, logoY + 28);
+            }
+
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.font = '900 36px Nunito, Arial, sans-serif';
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText('MuGöl Haber', MARGIN + 72, logoY + 28);
+
+            ctx.textAlign = 'right';
+            ctx.font = '600 24px Nunito, Arial, sans-serif'; 
+            ctx.fillStyle = 'rgba(255,255,255,0.6)';
+            ctx.fillText('https://mugol-portal.github.io/mugol.haber/', W - MARGIN, logoY + 28);
+
+            return canvas;
         }
-        
-        // Panoya kopyalama
+
         function copyToClipboard(text) {
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text);
@@ -2690,34 +2220,19 @@
             document.body.style.overflow = 'auto';
         }
         
-        // --- PWA INSTALL BANNER ---
         let deferredPrompt;
-        
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            
-            // Banner'ı göster
-            setTimeout(() => {
-                document.getElementById('installBanner').classList.add('show');
-            }, 3000); // 3 saniye sonra göster
+            setTimeout(() => { document.getElementById('installBanner').classList.add('show'); }, 3000);
         });
         
         function installApp() {
-            if (!deferredPrompt) {
-                showToast('Uygulama zaten yüklü veya desteklenmiyor', 'info');
-                return;
-            }
-            
+            if (!deferredPrompt) { showToast('Uygulama zaten yüklü veya desteklenmiyor', 'info'); return; }
             deferredPrompt.prompt();
-            
             deferredPrompt.userChoice.then((choiceResult) => {
-                if (choiceResult.outcome === 'accepted') {
-                    showToast('Uygulama yükleniyor...', 'success');
-                    hideInstallBanner();
-                } else {
-                    showToast('Yükleme iptal edildi', 'info');
-                }
+                if (choiceResult.outcome === 'accepted') { showToast('Uygulama yükleniyor...', 'success'); hideInstallBanner(); } 
+                else { showToast('Yükleme iptal edildi', 'info'); }
                 deferredPrompt = null;
             });
         }
@@ -2727,31 +2242,21 @@
             localStorage.setItem('installBannerDismissed', 'true');
         }
         
-        // Service Worker kaydı
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('Service Worker registered'))
-                    .catch(err => console.log('Service Worker registration failed'));
+                navigator.serviceWorker.register('./sw.js').then(reg => console.log('SW ok')).catch(err => console.log('SW err'));
             });
         }
         
-        // Sayfa yüklendiğinde banner durumunu kontrol et
         window.addEventListener('load', () => {
             const dismissed = localStorage.getItem('installBannerDismissed');
             if (!dismissed && !window.matchMedia('(display-mode: standalone)').matches) {
-                // Eğer PWA değilse ve daha önce kapatılmamışsa banner'ı göster
-                setTimeout(() => {
-                    if (!deferredPrompt) {
-                        // beforeinstallprompt tetiklenmemişse manuel göster
-                        document.getElementById('installBanner').classList.add('show');
-                    }
-                }, 5000);
+                setTimeout(() => { if (!deferredPrompt) document.getElementById('installBanner').classList.add('show'); }, 5000);
             }
         });
     </script>
 
-    <!-- ── Reklam Lazy Push: Sayfa yüklendiğinde reklamları push et ── -->
+    <!-- ── Reklam Lazy Push ── -->
     <script>
     (function() {
         function pushAds() {
@@ -2761,36 +2266,104 @@
                 }
             });
         }
-        // Sayfa yüklenince reklamları push et
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', function() { setTimeout(pushAds, 800); });
-        } else {
-            setTimeout(pushAds, 800);
-        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(pushAds, 800); }); } 
+        else { setTimeout(pushAds, 800); }
     })();
     </script>
 
-    <!-- PWA INSTALL BANNER -->
-    <div class="install-banner" id="installBanner">
-        <div class="install-banner-content">
-            <div class="install-banner-icon">
-                <i class="fas fa-download"></i>
-            </div>
-            <div class="install-banner-text">
-                <h3 class="install-banner-title">MuGöl Haber'i İndir</h3>
-                <p class="install-banner-desc">Uygulamayı telefonunuza indirin, daha hızlı erişin!</p>
-            </div>
-            <div class="install-banner-actions">
-                <button class="install-btn install-btn-primary" onclick="installApp()">
-                    <i class="fas fa-mobile-alt"></i>
-                    <span>İndir</span>
-                </button>
-                <button class="install-btn install-btn-secondary" onclick="hideInstallBanner()">
+    <!-- HABER GÖRSELİ ÖNİZLEME MODALI -->
+    <div id="imgPreviewModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.85); align-items:center; justify-content:center; padding:12px; overflow-y:auto;">
+        <div style="background:#1a2340; border-radius:20px; width:100%; max-width:480px; box-shadow:0 24px 60px rgba(0,0,0,0.7); overflow:hidden; position:relative;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; background:#111827; border-bottom:1px solid rgba(255,255,255,0.08);">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;">
+                        <i class="fas fa-image" style="color:white;font-size:0.85rem;"></i>
+                    </div>
+                    <div>
+                        <div style="color:white;font-family:Nunito,sans-serif;font-weight:800;font-size:1rem;">Görsel Önizleme</div>
+                        <div style="color:rgba(255,255,255,0.45);font-size:0.72rem;">İndirmeden önce düzenleyin</div>
+                    </div>
+                </div>
+                <button onclick="closeImagePreviewModal()" style="width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.07);color:white;cursor:pointer;font-size:1rem; display:flex;align-items:center;justify-content:center;">
                     <i class="fas fa-times"></i>
-                    <span>Kapat</span>
+                </button>
+            </div>
+
+            <div style="padding:16px 20px 0; position:relative;">
+                <div style="border-radius:14px; overflow:hidden; background:#0a0f1e; box-shadow:0 8px 24px rgba(0,0,0,0.5); position:relative; max-height: 50vh; overflow-y: auto;">
+                    <canvas id="previewCanvas" style="width:100%; display:block; border-radius:14px;"></canvas>
+                    <div id="previewLoadingOverlay" style="display:none; position:absolute;inset:0;background:rgba(10,15,30,0.8);align-items:center;justify-content:center;border-radius:14px;">
+                        <div style="text-align:center;">
+                            <div style="width:36px;height:36px;border-radius:50%;border:3px solid rgba(59,130,246,0.3);border-top-color:#3b82f6;animation:spin 0.8s linear infinite;margin:0 auto 8px;"></div>
+                            <div style="color:rgba(255,255,255,0.6);font-size:0.8rem;">Hazırlanıyor...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding:14px 20px 6px;">
+                <div style="color:rgba(255,255,255,0.6);font-size:0.75rem;font-family:Nunito,sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">
+                    <i class="fas fa-palette" style="color:#3b82f6;margin-right:6px;"></i>Arka Plan Rengi
+                </div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;flex:1;">
+                        <button class="clr-swatch" data-color="#0c1a3a" style="background:#0c1a3a;" onclick="pickPreviewColor('#0c1a3a',this)" title="Lacivert"></button>
+                        <button class="clr-swatch" data-color="#111827" style="background:#111827;" onclick="pickPreviewColor('#111827',this)" title="Antrasit"></button>
+                        <button class="clr-swatch" data-color="#7f1d1d" style="background:#7f1d1d;" onclick="pickPreviewColor('#7f1d1d',this)" title="Bordo"></button>
+                        <button class="clr-swatch" data-color="#064e3b" style="background:#064e3b;" onclick="pickPreviewColor('#064e3b',this)" title="Koyu Yeşil"></button>
+                        <button class="clr-swatch" data-color="#1e1b4b" style="background:#1e1b4b;" onclick="pickPreviewColor('#1e1b4b',this)" title="Koyu Mor"></button>
+                        <button class="clr-swatch" data-color="#431407" style="background:#431407;" onclick="pickPreviewColor('#431407',this)" title="Kahve"></button>
+                        <button class="clr-swatch" data-color="#0f172a" style="background:#0f172a;" onclick="pickPreviewColor('#0f172a',this)" title="Siyah"></button>
+                        <button class="clr-swatch" data-color="#1c3d5a" style="background:#1c3d5a;" onclick="pickPreviewColor('#1c3d5a',this)" title="Çelik Mavisi"></button>
+                    </div>
+                    <label style="position:relative;cursor:pointer;flex-shrink:0;" title="Özel renk seç">
+                        <input type="color" id="bgColorPicker" value="#0c1a3a" 
+                               style="position:absolute;opacity:0;width:0;height:0;" 
+                               onchange="onColorPickerChange(this.value)">
+                        <div style="width:38px;height:38px;border-radius:10px;border:2px solid rgba(255,255,255,0.2);background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);display:flex;align-items:center;justify-content:center;transition:0.2s;">
+                            <i class="fas fa-eyedropper" style="color:white;font-size:0.85rem;text-shadow:0 1px 3px rgba(0,0,0,0.8);"></i>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div style="padding:14px 20px 20px; display:flex; gap:10px;">
+                <button onclick="closeImagePreviewModal()" 
+                        style="flex:1;height:48px;border-radius:12px;border:2px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.7);font-family:Nunito,sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:0.2s;">
+                    <i class="fas fa-times" style="margin-right:6px;"></i>Kapat
+                </button>
+                <button onclick="downloadFromPreview()" 
+                        style="flex:2;height:48px;border-radius:12px;border:none;background:linear-gradient(135deg,#1e40af,#3b82f6);color:white;font-family:Nunito,sans-serif;font-weight:800;font-size:0.95rem;cursor:pointer;transition:0.2s;box-shadow:0 4px 16px rgba(30,64,175,0.4);">
+                    <i class="fas fa-download" style="margin-right:8px;"></i>İndir
                 </button>
             </div>
         </div>
     </div>
+
+    <style>
+    .clr-swatch { width:38px;height:38px;border-radius:10px; border:2px solid rgba(255,255,255,0.15); cursor:pointer;transition:0.2s;flex-shrink:0; }
+    .clr-swatch:hover { transform:scale(1.1); border-color:rgba(255,255,255,0.5); }
+    .clr-swatch.active { border-color:#3b82f6 !important; box-shadow:0 0 0 3px rgba(59,130,246,0.4); }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    </style>
+    <script>
+    function pickPreviewColor(color, el) {
+        document.getElementById('bgColorPicker').value = color;
+        document.querySelectorAll('.clr-swatch').forEach(b => b.classList.remove('active'));
+        el.classList.add('active'); showPreviewLoading(); renderPreviewCanvas();
+    }
+    function onColorPickerChange(color) {
+        document.querySelectorAll('.clr-swatch').forEach(b => b.classList.remove('active'));
+        showPreviewLoading(); renderPreviewCanvas();
+    }
+    function showPreviewLoading() {
+        const ov = document.getElementById('previewLoadingOverlay');
+        if(ov) { ov.style.display='flex'; setTimeout(()=>{ ov.style.display='none'; },1500); }
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+        const first = document.querySelector('.clr-swatch[data-color="#0c1a3a"]');
+        if(first) first.classList.add('active');
+    });
+    </script>
 </body>
 </html>
