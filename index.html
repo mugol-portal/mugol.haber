@@ -276,6 +276,48 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
 .action-btn{width:34px}
 .ticker-wrap{height:34px}.ticker-content{line-height:34px}.ticker-item{font-size:.82rem}.ticker-label{font-size:.72rem;padding:0 10px}
 
+/* ===== v2: kategori renkleri, yeni tasarım ===== */
+:root{--cat:#D8281F;--ad:#F59E0B}
+.nav-btn i{color:var(--c,var(--muted));transition:transform .2s}
+.nav-btn:hover i{transform:scale(1.2)}
+.nav-btn.active{color:var(--c,var(--brand));border-bottom-color:var(--c,var(--brand));border-bottom-width:4px}
+.page-title{border-left-color:var(--cat);font-size:1.45rem}
+.filter-btn.active{background:var(--cat);border-color:var(--cat)}
+.filter-btn{border-radius:999px}
+.time-filter{display:flex;gap:8px;padding:2px 0 10px;overflow-x:auto;scrollbar-width:none}
+.time-filter .filter-btn{background:var(--soft);border-color:transparent}
+.time-filter .filter-btn.active{color:#fff}
+.info-bar{background:var(--card);border-bottom:1px solid var(--line);font-size:.76rem;font-weight:700;color:var(--muted)}
+.info-bar>div{max-width:1180px;margin:0 auto;padding:6px 16px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.info-bar i{color:var(--cat);margin-right:3px}.info-bar b{color:var(--ink)}
+.card-img-wrap{border-radius:8px}
+.card-img{transition:transform .4s}
+.card:hover .card-img{transform:scale(1.05)}
+.source-tag{border-left:3px solid var(--cat);border-radius:3px}
+.card.read .card-title{opacity:.5}
+.card.read .card-img{filter:grayscale(.55)}
+.card.breaking-card .card-img-wrap{box-shadow:0 0 0 2px var(--red)}
+.grid:not(.list-view)>.card:first-child{border-radius:10px;box-shadow:0 8px 24px rgba(11,27,51,.2)}
+.grid:not(.list-view)>.card:first-child .card-title{border-left:5px solid var(--cat)}
+.setting-btn.active{border-color:var(--cat);color:var(--cat);box-shadow:inset 0 0 0 1px var(--cat)}
+
+/* ===== BELİRGİN REKLAM KUTULARI ===== */
+.mg-ad-box{margin:6px 0 20px;padding:42px 12px 16px;min-height:310px;border:2px dashed var(--ad);border-radius:12px;
+ background:repeating-linear-gradient(135deg,#FFFBEB 0 12px,#FEF3C7 12px 24px);box-shadow:0 6px 18px rgba(245,158,11,.28)}
+.mg-ad-box--bottom{margin:20px 0 0}
+.mg-ad-feed{grid-column:1/-1;margin:8px 0}
+.mg-ad-label{top:0;left:14px;transform:none;padding:5px 12px;border-radius:0 0 8px 8px;background:var(--ad);color:#1F1300;
+ font-size:.72rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.mg-ad-box ins.adsbygoogle{background:#fff;border-radius:6px;box-shadow:0 0 0 1px rgba(0,0,0,.1),0 4px 12px rgba(0,0,0,.12)}
+body.dark-mode .mg-ad-box{background:repeating-linear-gradient(135deg,#2B2210 0 12px,#35290F 12px 24px);border-color:#FBBF24}
+
+/* ===== reklam: daha ince ve sade ===== */
+.mg-ad-box{min-height:280px;padding:26px 8px 8px;margin:4px 0 16px;border:1px solid #F3D9A4;border-radius:8px;background:#FFFCF5;box-shadow:none}
+.mg-ad-feed{margin:4px 0}
+.mg-ad-label{left:10px;padding:2px 8px;border-radius:0 0 6px 6px;font-size:.62rem;letter-spacing:.1em}
+.mg-ad-box ins.adsbygoogle{box-shadow:none;border-radius:4px}
+body.dark-mode .mg-ad-box{background:#1B1710;border-color:#5A4515}
+
     </style>
 </head>
 <body>
@@ -328,6 +370,11 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
         </div>
     </div>
 
+    <div class="info-bar"><div>
+        <span><i class="far fa-calendar"></i> <span id="date-now"></span></span>
+        <span><i class="far fa-clock"></i> <span id="clock-now"></span> &nbsp;·&nbsp; Son güncelleme <b id="last-upd">--:--</b></span>
+    </div></div>
+
     <div class="container">
         <!-- BAŞLIK VE YENİLEME BUTONU -->
         <div class="section-header">
@@ -338,6 +385,11 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
             </div>
         </div>
 
+        <div class="time-filter" id="time-filter">
+            <button class="filter-btn active" data-m="all" onclick="setTimeFilter('all')">Tüm zamanlar</button>
+            <button class="filter-btn" data-m="3h" onclick="setTimeFilter('3h')"><i class="far fa-clock"></i> Son 3 saat</button>
+            <button class="filter-btn" data-m="today" onclick="setTimeFilter('today')">Bugün</button>
+        </div>
         <!-- FİLTRELER ALTTA -->
         <div class="filter-container" id="filter-container"></div>
 
@@ -457,6 +509,15 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
                 </div>
             </div>
 
+            <div class="setting-group">
+                <div class="setting-label"><i class="fas fa-rotate"></i> Otomatik Yenileme</div>
+                <div class="setting-options">
+                    <button class="setting-btn active" id="ar-0" onclick="setAutoRefresh(0)"><i class="fas fa-ban"></i><span>Kapalı</span></button>
+                    <button class="setting-btn" id="ar-5" onclick="setAutoRefresh(5)"><i class="fas fa-clock"></i><span>5 dk</span></button>
+                    <button class="setting-btn" id="ar-10" onclick="setAutoRefresh(10)"><i class="fas fa-clock"></i><span>10 dk</span></button>
+                </div>
+            </div>
+
             <!-- HIZLI İŞLEMLER -->
             <div class="setting-group">
                 <div class="setting-label">
@@ -521,66 +582,211 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
     <script>
         // --- 1. KAYNAK LİSTESİ (HAVA DURUMU VE AKOM EKLENDİ) ---
         const sources = {
-            gundem: { label: "Gündem", icon: "fa-globe", feeds: [
+            gundem: { label: "Gündem", icon: "fa-newspaper", feeds: [
+                {name: "NTV Son Dakika", url: "https://www.ntv.com.tr/son-dakika.rss"},
+                {name: "Habertürk Gündem", url: "https://www.haberturk.com/rss/kategori/gundem.xml"},
+                {name: "Ensonhaber", url: "https://www.ensonhaber.com/rss/ensonhaber.xml"},
+                {name: "Takvim", url: "https://www.takvim.com.tr/rss/guncel.xml"},
+                {name: "A Haber", url: "https://www.ahaber.com.tr/rss/gundem.xml"},
+                {name: "BirGün", url: "https://www.birgun.net/rss/home"},
+                {name: "Karar", url: "https://www.karar.com/rss"},
+                {name: "Haber7", url: "https://www.haber7.com/rss/gundem"},
+                {name: "Asayiş", url: "https://news.google.com/rss/search?q=asayi%C5%9F+polis+operasyon&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Yerel Haberler", url: "https://news.google.com/rss/search?q=belediye+valilik&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Kaza", url: "https://news.google.com/rss/search?q=trafik+kazas%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "İstanbul", url: "https://news.google.com/rss/search?q=%C4%B0stanbul&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Ankara", url: "https://news.google.com/rss/search?q=Ankara&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "İzmir", url: "https://news.google.com/rss/search?q=%C4%B0zmir&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Hürriyet", url: "https://www.hurriyet.com.tr/rss/gundem"},
+                {name: "Milliyet", url: "https://www.milliyet.com.tr/rss/rssnew/gundemrss.xml"},
+                {name: "Sabah", url: "https://www.sabah.com.tr/rss/gundem.xml"},
+                {name: "CNN Türk", url: "https://www.cnnturk.com/feed/rss/all/news"},
+                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=guncel"},
+                {name: "Cumhuriyet", url: "https://www.cumhuriyet.com.tr/rss/son_dakika.xml"},
+                {name: "Yeni Şafak", url: "https://www.yenisafak.com/rss?xml=gundem"},
+                {name: "Son Dakika", url: "https://news.google.com/rss/search?q=son+dakika&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "TRT Haber", url: "https://www.trthaber.com/manset_articles.rss"},
                 {name: "NTV", url: "https://www.ntv.com.tr/gundem.rss"},
                 {name: "Habertürk", url: "https://www.haberturk.com/rss/manset.xml"},
                 {name: "Sözcü", url: "https://www.sozcu.com.tr/rss/gundem.xml"}
             ]},
-            dunya: { label: "Dünya", icon: "fa-earth-americas", feeds: [
-                {name: "TRT Dünya", url: "https://www.trthaber.com/dunya_articles.rss"},
-                {name: "NTV Dünya", url: "https://www.ntv.com.tr/dunya.rss"},
-                {name: "Sözcü Dünya", url: "https://www.sozcu.com.tr/rss/dunya.xml"},
-                {name: "BBC Türkçe", url: "https://feeds.bbci.co.uk/turkce/rss.xml"}
-            ]},
             ekonomi: { label: "Ekonomi", icon: "fa-chart-line", feeds: [
+                {name: "Ekonomim", url: "https://www.ekonomim.com/rss"},
+                {name: "Investing TR", url: "https://tr.investing.com/rss/news.rss"},
+                {name: "Para Analiz", url: "https://www.paraanaliz.com/feed/"},
+                {name: "Finans Gündem", url: "https://www.finansgundem.com/rss"},
+                {name: "Borsa İstanbul", url: "https://news.google.com/rss/search?q=Borsa+%C4%B0stanbul+BIST&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Akaryakıt", url: "https://news.google.com/rss/search?q=akaryak%C4%B1t+benzin+motorin+fiyat&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Emlak", url: "https://news.google.com/rss/search?q=konut+emlak+kira&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Enflasyon", url: "https://news.google.com/rss/search?q=enflasyon+faiz+Merkez+Bankas%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Kripto", url: "https://news.google.com/rss/search?q=bitcoin+kripto+para&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Maaş & Zam", url: "https://news.google.com/rss/search?q=asgari+%C3%BCcret+emekli+maa%C5%9F&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Bloomberg HT", url: "https://www.bloomberght.com/rss"},
+                {name: "Hürriyet Ekonomi", url: "https://www.hurriyet.com.tr/rss/ekonomi"},
+                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=ekonomi"},
+                {name: "Dünya Gazetesi", url: "https://www.dunya.com/rss"},
+                {name: "Sabah Ekonomi", url: "https://www.sabah.com.tr/rss/ekonomi.xml"},
+                {name: "Döviz & Altın", url: "https://news.google.com/rss/search?q=dolar+alt%C4%B1n+borsa&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "TRT Ekonomi", url: "https://www.trthaber.com/ekonomi_articles.rss"},
                 {name: "NTV Ekonomi", url: "https://www.ntv.com.tr/ekonomi.rss"},
                 {name: "Sözcü Ekonomi", url: "https://www.sozcu.com.tr/rss/ekonomi.xml"},
                 {name: "Habertürk Ekonomi", url: "https://www.haberturk.com/rss/ekonomi.xml"}
             ]},
-            siyaset: { label: "Siyaset", icon: "fa-landmark", feeds: [
-                {name: "TRT Siyaset", url: "https://www.trthaber.com/siyaset_articles.rss"},
-                {name: "NTV Siyaset", url: "https://www.ntv.com.tr/siyaset.rss"},
-                {name: "Sözcü", url: "https://www.sozcu.com.tr/rss/gundem.xml"}
-            ]},
             spor: { label: "Spor", icon: "fa-futbol", feeds: [
+                {name: "Fanatik", url: "https://www.fanatik.com.tr/rss/anasayfa"},
+                {name: "Sporx", url: "https://www.sporx.com/rss/"},
+                {name: "Takvim Spor", url: "https://www.takvim.com.tr/rss/spor.xml"},
+                {name: "Galatasaray", url: "https://news.google.com/rss/search?q=Galatasaray&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Fenerbahçe", url: "https://news.google.com/rss/search?q=Fenerbah%C3%A7e&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Beşiktaş", url: "https://news.google.com/rss/search?q=Be%C5%9Fikta%C5%9F&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Trabzonspor", url: "https://news.google.com/rss/search?q=Trabzonspor&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Basketbol", url: "https://news.google.com/rss/search?q=basketbol+Euroleague&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Voleybol", url: "https://news.google.com/rss/search?q=voleybol+Sultanlar+Ligi&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Transfer", url: "https://news.google.com/rss/search?q=transfer+son+dakika+futbol&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Milli Takım", url: "https://news.google.com/rss/search?q=A+Milli+Tak%C4%B1m&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Formula 1", url: "https://news.google.com/rss/search?q=Formula+1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=spor"},
+                {name: "Hürriyet Spor", url: "https://www.hurriyet.com.tr/rss/spor"},
+                {name: "Sabah Spor", url: "https://www.sabah.com.tr/rss/spor.xml"},
+                {name: "CNN Türk Spor", url: "https://www.cnnturk.com/feed/rss/spor/news"},
+                {name: "Milliyet Spor", url: "https://www.milliyet.com.tr/rss/rssnew/sporrss.xml"},
+                {name: "Süper Lig", url: "https://news.google.com/rss/search?q=S%C3%BCper+Lig&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "TRT Spor", url: "https://www.trthaber.com/spor_articles.rss"},
                 {name: "NTV Spor", url: "https://www.ntv.com.tr/spor.rss"},
                 {name: "Habertürk", url: "https://www.haberturk.com/rss/spor.xml"},
                 {name: "Fotomaç", url: "https://www.fotomac.com.tr/rss/anasayfa.xml"}
             ]},
             teknoloji: { label: "Teknoloji", icon: "fa-microchip", feeds: [
+                {name: "Technopat", url: "https://www.technopat.net/feed/"},
+                {name: "iPhone & Apple", url: "https://news.google.com/rss/search?q=iPhone+Apple&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Android & Samsung", url: "https://news.google.com/rss/search?q=Samsung+Android&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Oyun", url: "https://news.google.com/rss/search?q=oyun+PlayStation+Steam&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Siber Güvenlik", url: "https://news.google.com/rss/search?q=siber+g%C3%BCvenlik+veri+s%C4%B1z%C4%B1nt%C4%B1s%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Yazılım", url: "https://news.google.com/rss/search?q=yaz%C4%B1l%C4%B1m+g%C3%BCncelleme&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Yapay Zeka", url: "https://news.google.com/rss/search?q=yapay+zeka+ChatGPT&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "ShiftDelete", url: "https://shiftdelete.net/feed"},
+                {name: "Chip Online", url: "https://www.chip.com.tr/rss"},
+                {name: "Webtekno", url: "https://www.webtekno.com/rss.xml"},
+                {name: "Tamindir", url: "https://www.tamindir.com/feed/"},
+                {name: "Teknoseyir", url: "https://teknoseyir.com/feed"},
+                {name: "Teknoloji", url: "https://news.google.com/rss/search?q=teknoloji+yapay+zeka&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "DonanımHaber", url: "https://www.donanimhaber.com/rss/tum/"},
                 {name: "Webrazzi", url: "https://webrazzi.com/feed/"},
-                {name: "Log", url: "https://www.log.com.tr/feed/"},
-                {name: "TRT Teknoloji", url: "https://www.trthaber.com/bilim_teknoloji_articles.rss"}
+                {name: "Log", url: "https://www.log.com.tr/feed/"}
             ]},
             bilim: { label: "Bilim", icon: "fa-atom", feeds: [
+                {name: "Arkeoloji", url: "https://news.google.com/rss/search?q=arkeoloji+kaz%C4%B1+ke%C5%9Fif&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Doğa & Hayvanlar", url: "https://news.google.com/rss/search?q=do%C4%9Fa+hayvan+t%C3%BCr%C3%BC&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Fizik", url: "https://news.google.com/rss/search?q=fizik+kuantum&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "İklim", url: "https://news.google.com/rss/search?q=iklim+de%C4%9Fi%C5%9Fikli%C4%9Fi&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Tarih", url: "https://news.google.com/rss/search?q=tarih+ara%C5%9Ft%C4%B1rma&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Mühendislik", url: "https://news.google.com/rss/search?q=m%C3%BChendislik+bulu%C5%9F&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Popular Science TR", url: "https://popsci.com.tr/feed/"},
+                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=bilim-teknoloji"},
+                {name: "Bilim", url: "https://news.google.com/rss/search?q=bilim+ke%C5%9Fif+uzay&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Uzay", url: "https://news.google.com/rss/search?q=uzay+NASA&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "Evrim Ağacı", url: "https://evrimagaci.org/rss.xml"},
                 {name: "Arkeofili", url: "https://arkeofili.com/feed/"},
                 {name: "TRT Bilim", url: "https://www.trthaber.com/bilim_teknoloji_articles.rss"}
             ]},
             otomobil: { label: "Otomobil", icon: "fa-car", feeds: [
+                {name: "Otomobil Fiyatları", url: "https://news.google.com/rss/search?q=s%C4%B1f%C4%B1r+otomobil+fiyat+listesi&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Kampanyalar", url: "https://news.google.com/rss/search?q=otomobil+kampanya&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Motosiklet", url: "https://news.google.com/rss/search?q=Motosiklet&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Test Sürüşü", url: "https://news.google.com/rss/search?q=test+s%C3%BCr%C3%BC%C5%9F%C3%BC+inceleme&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Togg", url: "https://news.google.com/rss/search?q=Togg&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "SUV", url: "https://news.google.com/rss/search?q=SUV+yeni+model&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Otomobil", url: "https://news.google.com/rss/search?q=otomobil+yeni+model&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Elektrikli Araçlar", url: "https://news.google.com/rss/search?q=elektrikli+ara%C3%A7+Togg&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Sabah Otomobil", url: "https://www.sabah.com.tr/rss/otomobil.xml"},
+                {name: "CNN Türk Oto", url: "https://www.cnnturk.com/feed/rss/otomobil/news"},
                 {name: "Motor1", url: "https://tr.motor1.com/rss/news/all/"},
                 {name: "Habertürk Oto", url: "https://www.haberturk.com/rss/otomobil.xml"}
             ]},
             magazin: { label: "Magazin", icon: "fa-camera", feeds: [
+                {name: "Diziler", url: "https://news.google.com/rss/search?q=dizi+reyting&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Düğün & Nişan", url: "https://news.google.com/rss/search?q=%C3%BCnl%C3%BC+d%C3%BC%C4%9F%C3%BCn+ni%C5%9Fan&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Fenomenler", url: "https://news.google.com/rss/search?q=sosyal+medya+fenomen&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Müzik", url: "https://news.google.com/rss/search?q=m%C3%BCzik+alb%C3%BCm+%C5%9Fark%C4%B1c%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Ünlü Haberleri", url: "https://news.google.com/rss/search?q=%C3%BCnl%C3%BC+isim+a%C3%A7%C4%B1klama&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Hürriyet Magazin", url: "https://www.hurriyet.com.tr/rss/magazin"},
+                {name: "Sabah Magazin", url: "https://www.sabah.com.tr/rss/magazin.xml"},
+                {name: "Milliyet Magazin", url: "https://www.milliyet.com.tr/rss/rssnew/magazinrss.xml"},
+                {name: "CNN Türk Magazin", url: "https://www.cnnturk.com/feed/rss/magazin/news"},
+                {name: "Ünlüler", url: "https://news.google.com/rss/search?q=%C3%BCnl%C3%BCler+magazin+dizi&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "Sözcü Magazin", url: "https://www.sozcu.com.tr/rss/magazin.xml"},
-                {name: "Habertürk Magazin", url: "https://www.haberturk.com/rss/magazin.xml"},
-                {name: "TRT Yaşam", url: "https://www.trthaber.com/yasam_articles.rss"}
+                {name: "Habertürk Magazin", url: "https://www.haberturk.com/rss/magazin.xml"}
             ]},
-            saglik: { label: "Sağlık", icon: "fa-heartbeat", feeds: [
+            saglik: { label: "Sağlık", icon: "fa-heart-pulse", feeds: [
+                {name: "Beslenme", url: "https://news.google.com/rss/search?q=beslenme+diyet&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Grip & Salgın", url: "https://news.google.com/rss/search?q=grip+salg%C4%B1n+hastal%C4%B1k&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Psikoloji", url: "https://news.google.com/rss/search?q=psikoloji+ruh+sa%C4%9Fl%C4%B1%C4%9F%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Kanser", url: "https://news.google.com/rss/search?q=kanser+ara%C5%9Ft%C4%B1rma+tedavi&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Egzersiz", url: "https://news.google.com/rss/search?q=egzersiz+spor+sa%C4%9Fl%C4%B1k&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Uyku", url: "https://news.google.com/rss/search?q=uyku+sa%C4%9Fl%C4%B1%C4%9F%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=saglik"},
+                {name: "Sabah Sağlık", url: "https://www.sabah.com.tr/rss/saglik.xml"},
+                {name: "CNN Türk Sağlık", url: "https://www.cnnturk.com/feed/rss/saglik/news"},
+                {name: "Hürriyet Sağlık", url: "https://www.hurriyet.com.tr/rss/saglik"},
+                {name: "Sağlık", url: "https://news.google.com/rss/search?q=sa%C4%9Fl%C4%B1k+uzman+%C3%B6nerisi&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "Sözcü Sağlık", url: "https://www.sozcu.com.tr/rss/saglik.xml"},
                 {name: "Habertürk Sağlık", url: "https://www.haberturk.com/rss/kategori/saglik.xml"},
                 {name: "TRT Sağlık", url: "https://www.trthaber.com/saglik_articles.rss"}
             ]},
+            yasam: { label: "Yaşam", icon: "fa-mug-hot", feeds: [
+                {name: "Moda", url: "https://news.google.com/rss/search?q=Moda&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Dekorasyon", url: "https://news.google.com/rss/search?q=ev+dekorasyon&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Evcil Hayvan", url: "https://news.google.com/rss/search?q=kedi+k%C3%B6pek+bak%C4%B1m&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Anne & Bebek", url: "https://news.google.com/rss/search?q=anne+bebek&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "İlişkiler", url: "https://news.google.com/rss/search?q=ili%C5%9Fkiler+aile&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Bahçe", url: "https://news.google.com/rss/search?q=bah%C3%A7e+bitki&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Sabah Yaşam", url: "https://www.sabah.com.tr/rss/yasam.xml"},
+                {name: "Hürriyet Yaşam", url: "https://www.hurriyet.com.tr/rss/yasam"},
+                {name: "CNN Türk Yaşam", url: "https://www.cnnturk.com/feed/rss/yasam/news"},
+                {name: "Seyahat", url: "https://news.google.com/rss/search?q=seyahat+gezi+tatil&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Yemek", url: "https://news.google.com/rss/search?q=yemek+tarifi&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "TRT Yaşam", url: "https://www.trthaber.com/yasam_articles.rss"},
+                {name: "Yaşam Rehberi", url: "https://news.google.com/rss/search?q=ya%C5%9Fam+rehberi+ipu%C3%A7lar%C4%B1&hl=tr&gl=TR&ceid=TR:tr"}
+            ]},
+            egitim: { label: "Eğitim", icon: "fa-graduation-cap", feeds: [
+                {name: "YKS", url: "https://news.google.com/rss/search?q=YKS&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "LGS", url: "https://news.google.com/rss/search?q=LGS&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "KPSS", url: "https://news.google.com/rss/search?q=KPSS&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Burs", url: "https://news.google.com/rss/search?q=burs+ba%C5%9Fvuru&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Karne & Tatil", url: "https://news.google.com/rss/search?q=karne+tatil+takvimi&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Üniversite Sınavı", url: "https://news.google.com/rss/search?q=%C3%96SYM+sonu%C3%A7&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=egitim"},
+                {name: "Hürriyet Eğitim", url: "https://www.hurriyet.com.tr/rss/egitim"},
+                {name: "Sabah Eğitim", url: "https://www.sabah.com.tr/rss/egitim.xml"},
+                {name: "Üniversite", url: "https://news.google.com/rss/search?q=%C3%BCniversite+Y%C3%96K&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Öğretmen", url: "https://news.google.com/rss/search?q=%C3%B6%C4%9Fretmen+atama&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "MEB & Okul", url: "https://news.google.com/rss/search?q=MEB+okul+e%C4%9Fitim&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Sınavlar", url: "https://news.google.com/rss/search?q=YKS+LGS+s%C4%B1nav&hl=tr&gl=TR&ceid=TR:tr"}
+            ]},
             kultur: { label: "Kültür Sanat", icon: "fa-palette", feeds: [
+                {name: "Müze", url: "https://news.google.com/rss/search?q=m%C3%BCze+sergi&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Edebiyat", url: "https://news.google.com/rss/search?q=edebiyat+yazar&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Konser", url: "https://news.google.com/rss/search?q=konser+festival&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Tiyatro", url: "https://news.google.com/rss/search?q=Tiyatro&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Tarih & Miras", url: "https://news.google.com/rss/search?q=tarihi+eser+restorasyon&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Anadolu Ajansı", url: "https://www.aa.com.tr/tr/rss/default?cat=kultur"},
+                {name: "Hürriyet Kültür Sanat", url: "https://www.hurriyet.com.tr/rss/kultur-sanat"},
+                {name: "Sinema", url: "https://news.google.com/rss/search?q=sinema+vizyon+film&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Kitap & Sergi", url: "https://news.google.com/rss/search?q=kitap+sergi+tiyatro&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "TRT Kültür", url: "https://www.trthaber.com/kultur_sanat_articles.rss"},
                 {name: "Sözcü Kültür", url: "https://www.sozcu.com.tr/rss/kultur-sanat.xml"},
                 {name: "Habertürk Kültür", url: "https://www.haberturk.com/rss/kategori/kultur-sanat.xml"}
             ]},
             hava: { label: "Hava Durumu", icon: "fa-cloud-sun", feeds: [
+                {name: "Meteoroloji Uyarı", url: "https://news.google.com/rss/search?q=Meteoroloji+sar%C4%B1+kod+uyar%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Orman Yangını", url: "https://news.google.com/rss/search?q=orman+yang%C4%B1n%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Sel", url: "https://news.google.com/rss/search?q=sel+ta%C5%9Fk%C4%B1n&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Fırtına", url: "https://news.google.com/rss/search?q=f%C4%B1rt%C4%B1na+kuvvetli+r%C3%BCzgar&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "İstanbul Hava", url: "https://news.google.com/rss/search?q=%C4%B0stanbul+hava+durumu&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Ankara Hava", url: "https://news.google.com/rss/search?q=Ankara+hava+durumu&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Hürriyet Hava", url: "https://www.hurriyet.com.tr/rss/hava-durumu"},
+                {name: "Kar & Yağış", url: "https://news.google.com/rss/search?q=kar+ya%C4%9F%C4%B1%C5%9F%C4%B1+sa%C4%9Fanak+uyar%C4%B1&hl=tr&gl=TR&ceid=TR:tr"},
+                {name: "Deprem", url: "https://news.google.com/rss/search?q=deprem+AFAD+Kandilli&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "MGM & Meteoroloji", url: "https://news.google.com/rss/search?q=Meteoroloji+hava+durumu&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "AKOM", url: "https://news.google.com/rss/search?q=AKOM+hava+durumu&hl=tr&gl=TR&ceid=TR:tr"},
                 {name: "Genel Hava Durumu", url: "https://news.google.com/rss/search?q=hava+durumu+uyar%C4%B1s%C4%B1&hl=tr&gl=TR&ceid=TR:tr"}
@@ -590,9 +796,7 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
 
         const fallbackImgs = {
             gundem: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=500&q=80",
-            dunya: "https://images.unsplash.com/photo-1521295121783-8a321d551ad2?w=500&q=80",
             ekonomi: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=500&q=80",
-            siyaset: "https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=500&q=80",
             spor: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=500&q=80",
             teknoloji: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80",
             bilim: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=500&q=80",
@@ -600,10 +804,14 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
             magazin: "https://images.unsplash.com/photo-1496449903678-68ddcb189a24?w=500&q=80",
             saglik: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=500&q=80",
             kultur: "https://images.unsplash.com/photo-1499856871940-a09627c6d7db?w=500&q=80",
+            yasam: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80",
+            egitim: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=500&q=80",
             hava: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=500&q=80",
             favoriler: "https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?w=500&q=80"
         };
 
+        const catColors = {gundem:'#D8281F',ekonomi:'#0F8A5F',spor:'#EA7A0C',teknoloji:'#6D4AFF',bilim:'#0891B2',otomobil:'#475569',magazin:'#DB2777',saglik:'#E11D48',yasam:'#B45309',egitim:'#2563EB',kultur:'#9333EA',hava:'#0284C7',favoriler:'#D8281F'};
+        let activeSource = null, timeMode = 'all';
         const apiBase = "https://api.rss2json.com/v1/api.json?rss_url=";
         let currentCategory = 'gundem';
         let allNewsData = [];
@@ -612,6 +820,8 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
 
         window.onload = () => {
             initTheme();
+            tickClock(); setInterval(tickClock, 30000);
+            setAutoRefresh(parseInt(localStorage.getItem('mg_ar') || '0'), true);
             renderMenu();
             loadNews('gundem');
             document.getElementById('search-input').addEventListener('input', (e) => {
@@ -820,6 +1030,7 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
                 let btn = document.createElement('button');
                 btn.className = 'nav-btn';
                 if(key==='favoriler') btn.classList.add('fav-tab');
+                btn.style.setProperty('--c', catColors[key]);
                 btn.innerHTML = `<i class="fas ${sources[key].icon}"></i> ${sources[key].label}`;
                 if(key===currentCategory) btn.classList.add('active');
                 
@@ -839,7 +1050,8 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
         }
 
         async function loadNews(catKey) {
-            currentCategory = catKey;
+            currentCategory = catKey; activeSource = null; timeMode = 'all'; syncTimeButtons();
+            document.documentElement.style.setProperty('--cat', catColors[catKey] || '#0A60C8');
             const grid = document.getElementById('news-grid');
             document.getElementById('page-title').innerText = sources[catKey].label;
             document.getElementById('status-text').innerText = "Yükleniyor...";
@@ -860,26 +1072,31 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
             const feeds = sources[catKey].feeds;
             let tempNews = [];
 
-            const promises = feeds.map(feed => 
-                fetch(apiBase + encodeURIComponent(feed.url))
+            let done = 0, timer = null;
+            const flush = () => {
+                const seen = new Set();
+                allNewsData = tempNews.filter(n => { const k = (n.link || n.title || '').trim(); if (!k || seen.has(k)) return false; seen.add(k); return true; })
+                    .sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
+                document.getElementById('status-text').innerText = `${allNewsData.length} Haber · ${done}/${feeds.length} kaynak`;
+                document.getElementById('last-upd').innerText = new Date().toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+                document.getElementById('filter-container').innerHTML = '';
+                createSourceFilters(allNewsData);
+                document.querySelectorAll('#filter-container .filter-btn').forEach(b => b.classList.toggle('active', activeSource ? b.innerText === activeSource : b.innerText === 'Tümü'));
+                applyFilters(); updateTicker(allNewsData);
+                if (done === feeds.length) document.getElementById('status-text').innerText = `${allNewsData.length} Haber`;
+            };
+            await Promise.all(feeds.map(feed =>
+                fetch(apiBase + encodeURIComponent(feed.url), {signal: AbortSignal.timeout(9000)})
                 .then(res => res.json())
-                .then(data => {
-                    if(data.status === 'ok') {
-                        return data.items.map(i => ({...i, specificSource: feed.name, categoryKey: catKey}));
-                    }
-                    return [];
-                }).catch(() => [])
-            );
-
-            const results = await Promise.all(promises);
-            results.forEach(arr => tempNews = tempNews.concat(arr));
-            tempNews.sort((a,b) => new Date(b.pubDate) - new Date(a.pubDate));
-            allNewsData = tempNews;
-            
-            document.getElementById('status-text').innerText = `${allNewsData.length} Haber`;
-            createSourceFilters(allNewsData);
-            renderGrid(allNewsData, catKey);
-            updateTicker(allNewsData);
+                .then(data => data.status === 'ok' ? data.items.map(i => ({...i, specificSource: feed.name, categoryKey: catKey})) : [])
+                .catch(() => [])
+                .then(arr => {
+                    if (catKey !== currentCategory) return;
+                    tempNews = tempNews.concat(arr); done++;
+                    clearTimeout(timer);
+                    if (done === feeds.length) flush(); else timer = setTimeout(flush, 500);
+                })
+            ));
         }
 
         function createSourceFilters(news) {
@@ -894,11 +1111,11 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
             allBtn.onclick = () => {
                 document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                 allBtn.classList.add('active');
-                renderGrid(allNewsData, currentCategory);
+                activeSource = null; applyFilters();
             };
             container.appendChild(allBtn);
 
-            uniqueSources.slice(0, 15).forEach(source => {
+            uniqueSources.slice(0, 40).forEach(source => {
                 if(!source) return;
                 const btn = document.createElement('button');
                 btn.className = 'filter-btn';
@@ -906,11 +1123,27 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
                 btn.onclick = () => {
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    const filtered = allNewsData.filter(i => (i.specificSource || i.sourceName) === source);
-                    renderGrid(filtered, currentCategory);
+                    activeSource = source; applyFilters();
                 };
                 container.appendChild(btn);
             });
+        }
+
+        function applyFilters() {
+            let list = allNewsData;
+            if (activeSource) list = list.filter(i => (i.specificSource || i.sourceName) === activeSource);
+            if (timeMode !== 'all') {
+                const now = new Date();
+                list = list.filter(i => {
+                    const d = new Date(i.pubDate); if (isNaN(d)) return false;
+                    return timeMode === '3h' ? (now - d) / 36e5 <= 3 : d.toDateString() === now.toDateString();
+                });
+            }
+            renderGrid(list, currentCategory);
+        }
+        function setTimeFilter(m) { timeMode = m; syncTimeButtons(); applyFilters(); }
+        function syncTimeButtons() {
+            document.querySelectorAll('#time-filter .filter-btn').forEach(b => b.classList.toggle('active', b.dataset.m === timeMode));
         }
 
         function updateTicker(news) {
@@ -925,6 +1158,43 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
         function filterNews(query) {
             const filtered = allNewsData.filter(item => item.title.toLowerCase().includes(query));
             renderGrid(filtered, currentCategory);
+        }
+
+        const READ_KEY = 'mugol_read_v1';
+        function getRead() { try { return JSON.parse(localStorage.getItem(READ_KEY)) || []; } catch(e) { return []; } }
+        function markRead(link, card) {
+            const r = getRead(); if (!r.includes(link)) { r.push(link); localStorage.setItem(READ_KEY, JSON.stringify(r.slice(-300))); }
+            card.classList.add('read');
+        }
+        function tickClock() {
+            const n = new Date();
+            document.getElementById('date-now').innerText = n.toLocaleDateString('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+            document.getElementById('clock-now').innerText = n.toLocaleTimeString('tr-TR',{hour:'2-digit',minute:'2-digit'});
+        }
+        let arTimer = null;
+        function setAutoRefresh(m, quiet) {
+            clearInterval(arTimer); localStorage.setItem('mg_ar', m);
+            document.querySelectorAll('[id^="ar-"]').forEach(b => b.classList.toggle('active', b.id === 'ar-' + m));
+            if (m > 0) arTimer = setInterval(() => loadNews(currentCategory), m * 60000);
+            if (!quiet) showToast(m > 0 ? `Otomatik yenileme: ${m} dk` : 'Otomatik yenileme kapalı', 'info');
+        }
+        document.addEventListener('keydown', e => {
+            if (e.key === '/' && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) { e.preventDefault(); document.getElementById('search-input').focus(); }
+        });
+        function makeAd() {
+            const ad = document.createElement('div');
+            ad.className = 'mg-ad-box mg-ad-feed'; ad.setAttribute('role', 'complementary');
+            ad.innerHTML = '<span class="mg-ad-label">Reklam</span><ins class="adsbygoogle" style="display:block;width:300px;height:250px;" data-ad-client="ca-pub-1880946354382681" data-ad-slot="1689789138" data-ad-format="rectangle"></ins>';
+            return ad;
+        }
+        function insertFeedAds(grid) {
+            const cards = grid.querySelectorAll(':scope > .card');
+            [7, 19].forEach(n => {
+                if (cards.length > n) {
+                    const ad = makeAd(); cards[n - 1].after(ad);
+                    try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+                }
+            });
         }
 
         function getFavorites() { return JSON.parse(localStorage.getItem(FAV_KEY)) || []; }
@@ -1058,9 +1328,9 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
                 const readTime = Math.max(1, Math.ceil(wordCount / 200));
 
                 const card = document.createElement('div');
-                card.className = `card ${breakingClass}`;
+                card.className = `card ${breakingClass} ${getRead().includes(item.link) ? 'read' : ''}`;
                 card.onclick = (e) => {
-                    if(!e.target.closest('.fav-btn')) openModal(item.link);
+                    if(!e.target.closest('.fav-btn')) { markRead(item.link, card); openModal(item.link); }
                 };
                 
                 // HTML attr kırılmalarına karşı güvenlik encode işlemleri
@@ -1115,6 +1385,7 @@ header{background:var(--card);border-bottom:1px solid var(--line)}
 
                 grid.appendChild(card);
             });
+            insertFeedAds(grid);
         }
 
         function openModal(link) {
