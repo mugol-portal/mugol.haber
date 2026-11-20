@@ -318,6 +318,10 @@ body.dark-mode .mg-ad-box{background:repeating-linear-gradient(135deg,#2B2210 0 
 .mg-ad-box ins.adsbygoogle{box-shadow:none;border-radius:4px}
 body.dark-mode .mg-ad-box{background:#1B1710;border-color:#5A4515}
 
+/* ===== reklam dolmazsa kutu görünmesin ===== */
+.mg-ad-box:not(.ad-ok){height:0!important;min-height:0!important;padding:0!important;margin:0!important;border:0!important;opacity:0;overflow:hidden;pointer-events:none}
+.mg-ad-box.ad-fail{display:none!important}
+
     </style>
 </head>
 <body>
@@ -1829,6 +1833,31 @@ body.dark-mode .mg-ad-box{background:#1B1710;border-color:#5A4515}
         }
         if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', function() { setTimeout(pushAds, 800); }); } 
         else { setTimeout(pushAds, 800); }
+    })();
+    </script>
+
+    <!-- ── Reklam dolmazsa kutuyu gizle ── -->
+    <script>
+    (function() {
+        function watchAd(ins) {
+            const box = ins.closest('.mg-ad-box');
+            if (!box || ins._mgWatched) return;
+            ins._mgWatched = true;
+            const check = () => {
+                const s = ins.getAttribute('data-ad-status');
+                if (s === 'filled') { box.classList.remove('ad-fail'); box.classList.add('ad-ok'); return true; }
+                if (s === 'unfilled') { box.classList.remove('ad-ok'); box.classList.add('ad-fail'); return true; }
+                return false;
+            };
+            if (check()) return;
+            new MutationObserver((m, o) => { if (check()) o.disconnect(); })
+                .observe(ins, { attributes: true, attributeFilter: ['data-ad-status'] });
+            // 8 sn içinde dolmazsa gizle (sonradan dolarsa tekrar gösterilir)
+            setTimeout(() => { if (!box.classList.contains('ad-ok')) box.classList.add('ad-fail'); }, 8000);
+        }
+        function scanAds() { document.querySelectorAll('.mg-ad-box ins.adsbygoogle').forEach(watchAd); }
+        scanAds();
+        setInterval(scanAds, 1000);
     })();
     </script>
 
